@@ -9,11 +9,11 @@ class ProductManager{
 
     async addProduct(title, description, price, thumbnail, code, stock){
         //Codigos Iguales o Repetidos
-        const prod = await this.getProducts();
-        const productSameCode = prod.some((product) =>product.code===code);
+      /*  const prod = await this.getProducts();
+        const productSameCode = prod.some((prod) =>prod.code===code);
             if(productSameCode){
                 throw new Error("El codigo ya existe!")
-            }
+            }*/
         //Que todos los campos sean obligatorios
 
         if (title&&description&&price&&thumbnail&&code&&stock) {
