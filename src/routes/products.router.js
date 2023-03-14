@@ -9,7 +9,7 @@ const productRouter = Router();
 
 let manager = new ProductManager();
 productRouter.use(json());
-//let addProducts = await manager.addProduct();
+let addProducts = await manager.addProduct();
 
 
 //devuelve los prod. con el limite, sino los devuelve todos.
