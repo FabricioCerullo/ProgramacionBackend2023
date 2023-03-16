@@ -1,9 +1,13 @@
 <div>
-    hello world!
+    <h1>Lista de Productos:</h1>
+
+<div id="listaProd">
+    <ul>
+        {{#each prod}}
+            <li>Producto:{{title}}, Codigo:{{code}}, Precio:{{price}}, Stock:{{stock}}, Categoria:{{description}}</li>
+        {{/each}}
+    </ul>
 </div>
-
-
-
 
 
 <script src="/socket.io/socket.io.js"></script>
