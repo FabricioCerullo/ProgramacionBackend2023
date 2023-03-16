@@ -36,9 +36,4 @@ socketServer.on('connection', (socket)=>{
     console.log("Connection established");
 
 
-    socket.on("message", (data)=>{
-        console.log(data);
-
-        socket.emit("message", "mensaje desde el server");
-    });
 });
