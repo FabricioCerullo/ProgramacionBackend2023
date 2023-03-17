@@ -4,6 +4,8 @@ import cartRouter from "./routes/cart.router.js";
 import {engine} from "express-handlebars";
 import __dirname from "./utils.js";
 import {Server} from "socket.io";
+import viewsRouter from "./routes/views.router.js";
+
 
 const app = express();
 
@@ -11,29 +13,24 @@ app.use(express.static(__dirname + "/../public"))
 
 app.use("/api/products", productRouter);
 app.use("/api/cart", cartRouter);
+app.use("/", viewsRouter)
 
 app.engine('handlebars', engine());
 app.set('view engine', 'handlebars');
 app.set('views',__dirname+'/views');
 
-
-app.get('/', (req, res) => {
-    res.render('home');
-});
-
-/*
-app.listen(8080, ()=>{
-    console.log("Server listening on port 8080");
-});*/
-
 const httpServer = app.listen(8080, ()=>{
     console.log("Server listening on port 8080");
 });
 
-const socketServer = new Server(httpServer);
+const io = new Server(httpServer)
 
-socketServer.on('connection', (socket)=>{
-    console.log("Connection established");
+io.on("connection", (socket)=>{
+    console.log("Connected");
+})
 
+app.use((req,res,next)=>{
+    req.io = io
+    next()
+})
 
-});
