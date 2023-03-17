@@ -1,7 +1,7 @@
 const socket = io();
 
-const datosProd = document.getElementById("listaProd");
-socket.on("listaProd", async(d)=>{
+const listaProd = document.getElementById("listaProd");
+socket.on("newListProd", async(d)=>{
     let prodLista = "";
     await d.forEach((e)=>{
         prodLista+= `
@@ -10,5 +10,7 @@ socket.on("listaProd", async(d)=>{
         </ul>    
         `
     });
-    datosProd.innerHTML = prodLista;
+    listaProd.innerHTML = prodLista;
 });
+
+
