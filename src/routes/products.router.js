@@ -2,7 +2,7 @@ import { Router, json } from "express";
 import ProductManager from "../managers/desafioJsBackend.js";
 import __dirname from "../utils.js";
 
-
+    
 
 const productRouter = Router();
 
