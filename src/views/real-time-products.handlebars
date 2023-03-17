@@ -1,45 +1,26 @@
+<script  src="/socket.io/socket.io.js"></script>
+<script  src="/js/index.js"></script>
+
 <h1>Lista de Productos en tiempo ral:</h1>  
 
 <div id="container">
-    <div id="agregarProd">
-        <form action="" method="post">
-            <div>
-                <label for="code">Codigo</label>
-                <input type="number" name="code" id="code">   
-            </div>
-
-            <div>
-                <label for="title">Titulo</label>
-                <input type="text" name="title" id="title">   
-            </div>
-
-             <div>
-                <label for="price">Precio</label>
-                <input type="number" name="price" id="price">   
-            </div>
-
-            <div>
-                <label for="stock">Stock</label>
-                <input type="number" name="stock" id="stock">   
-            </div>
-
-            <div>
-                <label for="description">Categoria</label>
-                <input type="text" name="description" id="description">   
-            </div>
-            <input type="sumbit" value="sumbit">
-        </form>
-        <div id="prodAct">
-            <h2>Productos Actualizados</h2>
-            <div id="listaProd">
-
-            </div>
-        </div>
+    <div id="prod">
+        <ul>
+        {{#each prod}}
+            <li>
+                Producto:{{title}},
+                Codigo:{{code}},
+                Precio:{{price}},
+                Stock:{{stock}},
+                Categoria:{{description}}
+            </li>
+        {{/each}}
+        </ul>
     </div>
+
 </div>
 
-<script src="/socket.io/socket.io.js"></script>
-<script src="/js/index.js"></script>
+
 
 
 
