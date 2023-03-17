@@ -7,13 +7,19 @@
 <div id="container">
     <ul>
         {{#each prod}}
+        <br>
             <li>
-                Producto:{{title}},
-                Codigo:{{code}},
-                Precio:{{price}},
-                Stock:{{stock}},
-                Categoria:{{description}}
+                Producto:  <b>{{title}}</b> ,
+                <br>
+                Codigo: {{code}},
+                <br>
+                Precio: {{price}},
+                <br>
+                Stock: {{stock}},
+                <br>
+                Categoria: {{description}}
             </li>
+            <br>
         {{/each}}
     </ul>
 </div>
