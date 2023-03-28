@@ -34,6 +34,6 @@ app.use((req,res,next)=>{
     next()
 })
 
-mongoose.connect("mongodb+srv://fabricioAdmin:12345@coderbackend39700.sarerxd.mongodb.net/?retryWrites=true&w=majority").then((connection)=>{
+mongoose.connect("mongodb+srv://fabricioAdmin:12345@coderbackend39700.sarerxd.mongodb.net/test?retryWrites=true&w=majority").then((connection)=>{
     console.log("Connected to Data Base!");
 })
