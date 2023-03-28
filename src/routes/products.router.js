@@ -1,5 +1,5 @@
 import { Router, json } from "express";
-import ProductManager from "../managers/desafioJsBackend.js";
+import {ProductManager} from "../dao/index.js";
 import __dirname from "../utils.js";
 
     
