@@ -4,6 +4,7 @@ class CartManager{
     #acc=0;
     constructor(){
         this.path="../cartProd.json";
+        console.log("Working with products using fileSystem");
     }
 
     async getCart(){
@@ -15,18 +16,15 @@ class CartManager{
         }
     }
 
-    async addNewCart(){
+    async addNewCart(cid, products){
         try {
-            let carts = await this.getCart();
             const carroCompra = {
-                cid: this.#acc,
-                products:[]
+                cid,
+                products,
             }
             const carro = await this.getCart();
             const updateCart = [...carro, carroCompra];
-            this.#acc++;
             await fs.promises.writeFile(this.path, JSON.stringify(updateCart))
-            return carts;
     
         } catch (error) {
             return "Ha ocurrido un error!"
@@ -34,8 +32,8 @@ class CartManager{
     }
 
     async findCartToID(cid) {
-        let carts = await this.getCart();
-        let cartId =  carts.find((x)=>x.cid===cid);
+        const carts = await this.getCart();
+        const cartId =  carts.find((x)=>x.cid===cid);
         if (cartId) {
             return cartId;
         }else {
@@ -70,6 +68,9 @@ class CartManager{
         }
 
     }
+
+
+    
 }
 
 export default CartManager;
