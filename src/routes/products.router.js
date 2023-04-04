@@ -13,7 +13,7 @@ productRouter.use(json());
 
 //devuelve los prod. con el limite, sino los devuelve todos.
 
-productRouter.get('/', async (req,res) => {
+productRouter.get('/all', async (req,res) => {
     try {  
         const products = await manager.getProducts();
          const {limit} = req.query;
@@ -32,9 +32,6 @@ productRouter.get('/', async (req,res) => {
     } catch (error) {
         res.status(404).send({status: "error", error: "Ha ocurrido un error!"});
     }
-
-
-
 })
 
 //devuelve el prod. con la id indicada
