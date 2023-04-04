@@ -1,11 +1,13 @@
 import { Router, json } from "express";
-import CartManager from "../dao/managers/cart.js"
+import {CartManager} from "../dao/index.js";
 import {ProductManager} from "../dao/index.js";
 
 
 const cartRouter = Router();
 let manager = new CartManager();
 cartRouter.use(json());
+
+
 
 cartRouter.get('/', async (req, res)=>{
    const carro = await manager.getCart();
@@ -30,6 +32,15 @@ cartRouter.post('/:cid/product/:pid', async(req, res)=>{
     let product = await ProductManager.getProductById(prodid);
     await CartManager.addProductToCart(product, cartid);
     res.send({status:"sucess", payload:await manager.findCartToID(cid)});
+})
+
+cartRouter.delete('/:cid/product/:pid', async (req,res)=>{
+    const {cid, pid} = req.params;
+    const cartid = parseInt(cid);
+    const prodid = parseInt(pid);
+
+    let prodDelete = await manager.deleteProductById(prodid);
+    res.send({status:"sucess", payload: prodDelete});
 })
 
 export default cartRouter;
