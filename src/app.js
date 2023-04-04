@@ -5,7 +5,7 @@ import {engine} from "express-handlebars";
 import __dirname from "./utils.js";
 import {Server} from "socket.io";
 import viewsRouter from "./routes/views.router.js";
-import mongoose, { Mongoose } from "mongoose"
+import {mongoose} from "mongoose"
 
 const app = express();
 
@@ -34,6 +34,6 @@ app.use((req,res,next)=>{
     next()
 })
 
-mongoose.connect("mongodb+srv://fabricioAdmin:12345@coderbackend39700.sarerxd.mongodb.net/test?retryWrites=true&w=majority").then((connection)=>{
+mongoose.connect("mongodb+srv://fabricioAdmin:12345@coderbackend39700.sarerxd.mongodb.net/prueba1?retryWrites=true&w=majority").then((connection)=>{
     console.log("Connected to Data Base!");
 })
