@@ -52,8 +52,8 @@ class ProductManager{
      //Busqueda del prod. por ID
 
      async getProductById(id){
-        let prodId = await this.getProducts();
-        let prod = prodId.find((x)=>x.id===id);
+        const prodId = await this.getProducts();
+        const prod =  prodId.find((x)=>x.id===id);
         if(prod){
             return prod;
         }else{
@@ -62,11 +62,11 @@ class ProductManager{
      }
 
     async updateProduct(id,elementModif){
-        let prodId = await this.getProducts();
-        let prod = prodId.find((x)=>x.id===id);
+        const prodId = await this.getProducts();
+        const prod = prodId.find((x)=>x.id===id);
 
          prod = {...prod,... elementModif}
-          let newProdModif = prodId.filter(p=>p.id!==id);
+         const newProdModif = prodId.filter(p=>p.id!==id);
           newProdModif = [...newProdModif, prod];
           await fs.promises.writeFile(this.path, JSON.stringify(newProdModif));
           console.log("Moficado correctamente");
@@ -76,7 +76,7 @@ class ProductManager{
     async deleteProduct(id){
         const prodId = await this.getProducts();
 
-        let delet = prodId.filter((x)=>x.id!==id);
+        const delet = prodId.filter((x)=>x.id!==id);
         fs.promises.writeFile(this.path,JSON.stringify(delet))
         console.log("producto eliminado con exito");
      }
