@@ -1,16 +1,15 @@
 import { Router, json } from "express";
 import {ProductManager} from "../dao/index.js";
 import __dirname from "../utils.js";
+import prodModel from "../dao/models/prod.model.js";
 
     
 
 const productRouter = Router();
 
 
-let manager = new ProductManager();
+const manager = new ProductManager();
 productRouter.use(json());
-let addProducts = await manager.addProduct();
-
 
 //devuelve los prod. con el limite, sino los devuelve todos.
 
@@ -18,23 +17,30 @@ productRouter.get('/', async (req,res) => {
     try {  
         const products = await manager.getProducts();
          const {limit} = req.query;
-         
-         if (limit) {
-            const limitProduct = products.slice(0, limit);
-            return res.send({status:"sucess", payload: limitProduct});
-         }
-         res.send({status:"sucess", payload: products});
+         const {page} = req.query;
 
+
+         const prodFilter = await prodModel.paginate(
+            {},
+            {limit: limit, page: page}
+         )
+         if (limit||page) { 
+            return res.send({status:"sucess", payload: prodFilter});
+         } else {
+            res.send({status:"sucess", payload: products});
+         }
     } catch (error) {
         res.status(404).send({status: "error", error: "Ha ocurrido un error!"});
     }
+
+
 
 })
 
 //devuelve el prod. con la id indicada
 
 productRouter.get("/:pid", async(req, res) => {
-    try {
+   try {
         const {pid} = req.params;
         const product = await manager.getProductById(parseInt(pid));
         res.send({status:"sucess", payload: product});
@@ -42,15 +48,16 @@ productRouter.get("/:pid", async(req, res) => {
     } catch (error) {
         res.status(404).send({status: "error", error: "Ha ocurrido un error!"});
     }
+
 })
 
 //se agrega un nuevo prod. 
 
 productRouter.post("/", async(req, res) => {
     try {
-        const {title, description, price, thumbail=[], code, stock} = req.body
-        const newProd = addProducts(title, description, parseInt(price), thumbail, code, parseInt(stock));
-        res.send(newProd);
+        const {title, description, price, thumbail, code, stock} = req.body;
+        const newProd = await manager.addProduct({title, description,price, thumbail, code, stock});
+        res.status(201).send({status: "ok", payload: newProd});
     } catch (error) {
         res.status(404).send({status: "error", error: "Ha ocurrido un error!"});
     }
