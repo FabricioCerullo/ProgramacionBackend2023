@@ -9,10 +9,10 @@ export default class CartManager{
         return carroCompra;
     }
 
-    async addNewCart(){
+    async addNewCart(cid, products){
         const carrAdd  = {
-            cid :1,
-            products: [],
+            cid,
+            products
         }
 
         const result = await cartModel.create(carrAdd);
