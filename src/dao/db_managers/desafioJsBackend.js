@@ -2,7 +2,7 @@ import prodModel from "../models/prod.model.js";
 export default class ProductManager{
 
     constructor(){
-        console.log("Working with products using fileSystem");
+        console.log("Working with products using Data Base");
     }
 
     async addProduct(prod){
@@ -11,12 +11,12 @@ export default class ProductManager{
     }
 
     async getProducts(){
-        const prod = await prodModel.find().lean();
+     const prod = await prodModel.find().lean();
         return prod;
+
     }
-
-
-    async getProductById(){}
-
-    async updateProduct(){}
+    async deleteProduct(id){
+        const productDelete= await prodModel.deleteOne({ _id: id })
+        return productDelete;
+    }
 }
