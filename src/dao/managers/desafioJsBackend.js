@@ -53,7 +53,7 @@ class ProductManager{
 
      async getProductById(id){
         const prodId = await this.getProducts();
-        const prod =  prodId.find((x)=>x.id===id);
+        const prod = prodId.find((x)=>x.id===id);
         if(prod){
             return prod;
         }else{
