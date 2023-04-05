@@ -1,9 +1,7 @@
-import { Router, json } from "express";
+import { Router, json} from "express";
 import {ProductManager} from "../dao/index.js";
 import __dirname from "../utils.js";
 import prodModel from "../dao/models/prod.model.js";
-
-    
 
 const productRouter = Router();
 
@@ -13,13 +11,11 @@ productRouter.use(json());
 
 //devuelve los prod. con el limite, sino los devuelve todos.
 
-productRouter.get('/all', async (req,res) => {
-    try {  
-        const products = await manager.getProducts();
+productRouter.get('/', async (req,res) => {
+    try {
+        //const products = await manager.getProducts();    
          const {limit} = req.query;
          const {page} = req.query;
-
-
          const prodFilter = await prodModel.paginate(
             {},
             {limit: limit, page: page}
@@ -33,20 +29,20 @@ productRouter.get('/all', async (req,res) => {
         res.status(404).send({status: "error", error: "Ha ocurrido un error!"});
     }
 })
+//-----> SOLO LEE EL GET "/", LUEGO NO REALIZA OTRA OPERACION
 
 //devuelve el prod. con la id indicada
 
-productRouter.get("/:pid", async(req, res) => {
-   try {
-        const {pid} = req.params;
-        const product = await manager.getProductById(parseInt(pid));
-        res.send({status:"sucess", payload: product});
-
-    } catch (error) {
-        res.status(404).send({status: "error", error: "Ha ocurrido un error!"});
-    }
-
-})
+productRouter.get("/:id", async(req, res) => {
+    try {
+         const {id} = req.params;
+         const product = await manager.getProductById(parseInt(id));
+         res.send({status:"sucess", payload: product});
+     } catch (error) {
+         res.status(404).send({status: "error", error: "Ha ocurrido un error!"});
+     }
+ 
+ })
 
 //se agrega un nuevo prod. 
 
