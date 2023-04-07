@@ -41,30 +41,31 @@ class CartManager{
         }
     }
 
-    async addProductToCart(cid, product) {
+    async addProductToCart(cid, pid) {
         try {
-            let carts = await this.getCart();
-            let carro=await this.findCartToID(cid);
-            let productExist = carro.products.find((x)=>x.id===id);
+            const carts = await this.getCart();
+            const carro= await this.findCartToID(cid);
+            let productExist = carro.products.find((x)=>x.pid===pid);
     
             if (productExist) {
                 productExist.quantity++;
-                let fProducts = carro.products.filter(p=>p.id!==productExist.id);
+
+                let fProducts = carro.products.filter(p=>p.pid !== productExist.pid);
                 fProducts = [...fProducts, productExist];
-                carts.products = fProducts;
+                carro.products = fProducts;
     
-                let newCart = carts.filter((x)=>x.id!==id);
-                newCart = [...newCart, carro];
-                await fs.promises.writeFile(this.path, JSON.stringify(newCart));
+                let cartModif = carts.filter((x)=>x.cid!==cid);
+                cartModif = [...cartModif, carro];
+                await fs.promises.writeFile(this.path, JSON.stringify(cartModif));
             } else {
-                carro.products = [...carro.products, {id:product.id, quantity:1}];
-                let newCart = carts.filter( c => c.id !== id)
+                carro.products = [...carro.products, {pid:product.pid, quantity:1}];
+                let newCart = carts.filter( c => c.cid !== cid)
                 newCart = [...newCart, carro]
                 await fs.promises.writeFile(this.path, JSON.stringify(newCart))
     
             }
         } catch (error) {
-            return "Ha ocurrido un error!";
+            return error.toString();
         }
 
     }
