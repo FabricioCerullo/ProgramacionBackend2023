@@ -43,8 +43,8 @@ cartRouter.post('/:cid/product/:pid', async(req, res)=>{
     const {cid, pid} = req.params;
     const cartid = parseInt(cid);
     const prodid = parseInt(pid);
-    const product = await managerProd.getProductById(prodid);
-    const newCart = await manager.addProductToCart(product, cartid);
+   // const product = await managerProd.getProductById(prodid);
+    const newCart = await manager.addProductToCart(cartid, prodid);
     res.send({status:"sucess", payload: newCart});
 })
 
