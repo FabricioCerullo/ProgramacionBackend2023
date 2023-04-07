@@ -9,11 +9,10 @@ const productRouter = Router();
 const manager = new ProductManager();
 productRouter.use(json());
 
-//devuelve los prod. con el limite, sino los devuelve todos.
 
 productRouter.get('/', async (req,res) => {
     try {
-        //const products = await manager.getProducts();    
+        const products = await manager.getProducts();    
          const {limit} = req.query;
          const {page} = req.query;
          const prodFilter = await prodModel.paginate(
@@ -31,18 +30,21 @@ productRouter.get('/', async (req,res) => {
 })
 //-----> SOLO LEE EL GET "/", LUEGO NO REALIZA OTRA OPERACION
 
+
+
 //devuelve el prod. con la id indicada
 
 productRouter.get("/:id", async(req, res) => {
     try {
-         const {id} = req.params;
+         const { id } = req.params;
          const product = await manager.getProductById(parseInt(id));
          res.send({status:"sucess", payload: product});
      } catch (error) {
-         res.status(404).send({status: "error", error: "Ha ocurrido un error!"});
+         res.status(404).send({status: "error", error: "Ha ocurrido un error!2"});
      }
  
  })
+
 
 //se agrega un nuevo prod. 
 
@@ -84,6 +86,7 @@ productRouter.delete("/:pid", async (req, res)=> {
     }
 
 })
+
 
 
 export default productRouter;
