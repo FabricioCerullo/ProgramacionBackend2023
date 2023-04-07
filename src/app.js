@@ -13,7 +13,7 @@ app.use(express.static(__dirname + "/../public"))
 
 app.use("/api/products", productRouter);
 app.use("/api/cart", cartRouter);
-app.use("/", viewsRouter)
+app.use("/", viewsRouter);
 
 app.engine('handlebars', engine());
 app.set('view engine', 'handlebars');
