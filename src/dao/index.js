@@ -7,8 +7,7 @@ const config = {
     persistenceType: "file",
 };
 
-let ProductManager;
-let CartManager;
+let ProductManager, CartManager;
 
 if (config.persistenceType ==="db") {
     ProductManager = DBProductManager;
