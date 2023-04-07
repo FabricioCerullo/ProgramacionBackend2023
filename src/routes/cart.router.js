@@ -5,6 +5,7 @@ import {ProductManager} from "../dao/index.js";
 
 const cartRouter = Router();
 const manager = new CartManager();
+const managerProd = new ProductManager();
 cartRouter.use(json());
 
 
@@ -36,15 +37,15 @@ cartRouter.get('/:cid', async (req, res) => {
 
 })
 
-//añadir 1 producto mas en el carro buscado por CID
+//añadir 
 
 cartRouter.post('/:cid/product/:pid', async(req, res)=>{
     const {cid, pid} = req.params;
     const cartid = parseInt(cid);
     const prodid = parseInt(pid);
-    let product = await ProductManager.getProductById(prodid);
-    await CartManager.addProductToCart(product, cartid);
-    res.send({status:"sucess", payload:await manager.findCartToID(cid)});
+    const product = await managerProd.getProductById(prodid);
+    const newCart = await manager.addProductToCart(product, cartid);
+    res.send({status:"sucess", payload: newCart});
 })
 
 cartRouter.delete('/:cid/product/:pid', async (req,res)=>{
