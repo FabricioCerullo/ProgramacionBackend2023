@@ -4,7 +4,7 @@ import DBProductManager from "./db_managers/desafioJsBackend.js";
 import DBCartManager from "./db_managers/cart.js"
 
 const config = {
-    persistenceType: "file",
+    persistenceType: "db",
 };
 
 let ProductManager, CartManager;
