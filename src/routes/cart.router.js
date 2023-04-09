@@ -16,6 +16,35 @@ cartRouter.get('/', async (req, res)=>{
     res.send({status:"sucess", payload: carro});
 })
 
+//devuelve la cart. especificada
+
+
+
+//agrega prod. al carro
+
+cartRouter.post('/:cid/:pid', async (req, res)=>{
+    const {cid, pid} = req.params;
+    const result = await manager.addProductToCart(cid, pid);
+    res.send({status:"success", payload: result});
+})
+
+//actualiza la cart.
+
+cartRouter.put('/:cid', async (req, res)=>{
+    const {cid,pid} = req.params;
+    const result = await manager.updateCart(cid,pid);
+    res.send({status:"success", payload: result});
+})
+
+//elimina los prod. de la cart.
+
+cartRouter.delete("/:cid", async (req, res) => {
+    const {cid} = req.params;
+    const result = await manager.deleteCart(cid);
+    res.send({status:"success", payload: result});
+})
+
+/*
 //agrego 1 carro con sus respectivos prod.
 
 cartRouter.post('/', async (req, res)=>{
@@ -43,8 +72,8 @@ cartRouter.post('/:cid/product/:pid', async(req, res)=>{
     const {cid, pid} = req.params;
     const cartid = parseInt(cid);
     const prodid = parseInt(pid);
-   // const product = await managerProd.getProductById(prodid);
-    const newCart = await manager.addProductToCart(cartid, prodid);
+    const prod = await managerProd.getProductById(prodid);
+    const newCart = await manager.addProductToCart(cartid, prod);
     res.send({status:"sucess", payload: newCart});
 })
 
@@ -56,6 +85,6 @@ cartRouter.delete('/:cid/product/:pid', async (req,res)=>{
     let prodDelete = await manager.deleteProductById(prodid);
     res.send({status:"sucess", payload: prodDelete});
 })
-
+*/
 
 export default cartRouter;
