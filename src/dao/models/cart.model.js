@@ -3,9 +3,20 @@ import mongoosePaginate from "mongoose-paginate-v2"
 
 const cartSchema = new mongoose.Schema({
     products: {
-       type: "array",
-       default: [], 
-    }
+        type:[
+            {
+                pid:{
+                    type: mongoose.Schema.Types.ObjectId,
+                    ref:"products",
+                },
+                quantity:{
+                    type:Number,
+                    default:1
+                },
+            },
+        ],
+        default:[],
+    },
 });
 
 cartSchema.plugin(mongoosePaginate);
