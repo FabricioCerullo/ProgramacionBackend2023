@@ -42,13 +42,16 @@ class CartManager{
     }
 
     async addProductToCart(cid, pid) {
+        /*
         try {
+            
             const carts = await this.getCart();
             const carro= await this.findCartToID(cid);
             let productExist = carro.products.find((x)=>x.pid===pid);
     
             if (productExist) {
-                productExist.quantity++;
+                const updateQuantity = 
+                productExist.quantity+=1
 
                 let fProducts = carro.products.filter(p=>p.pid !== productExist.pid);
                 fProducts = [...fProducts, productExist];
@@ -58,16 +61,43 @@ class CartManager{
                 cartModif = [...cartModif, carro];
                 await fs.promises.writeFile(this.path, JSON.stringify(cartModif));
             } else {
-                carro.products = [...carro.products, {pid:product.pid, quantity:1}];
+                carro.products = [...carro.products, {pid:pid, quantity:1}];
                 let newCart = carts.filter( c => c.cid !== cid)
                 newCart = [...newCart, carro]
                 await fs.promises.writeFile(this.path, JSON.stringify(newCart))
     
             }
+            
+
         } catch (error) {
             return error.toString();
         }
 
+
+        
+        const carts = await this.getCart();
+        const cartId= await this.findCartToID(cid);
+        if (cartId) {
+            const cartUse = await carts.find((c) => c.cid === cid);
+            let prodInCart = cartUse.products.some((p) => p.pid === pid)
+            if (prodInCart) {
+                let updateQuantity = cartUse.products.find((p) => p.pid ===pid);
+                updateQuantity.quantity++;
+                let updateCart = await carts.filter((cart) => cart.cid !==cid);
+                updateCart = [...updateQuantity, cartUse];
+                await fs.promises.writeFile(this.path, JSON.stringify(updateCart));
+                return updateCart;
+            }else{
+                cartUse.products = [...cartUse.products, {pid:pid, quantity:1}];
+                updateCart = await cart.filter((cart) => cart.cid !==cid);
+                updateCart = [...updateCart, cartUse];
+                await fs.promises.writeFile(this.path, JSON.stringify(updateCart));
+                return updateCart;
+            }
+        }else{
+            return console.log("error");
+        }
+        */
     }
 
 
