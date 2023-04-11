@@ -5,23 +5,26 @@
     <h1>Lista de Productos:</h1>
 
 <div id="container">
-    <ul>
-        {{#each prod}}
-        <br>
-            <li>
-                Producto:  <b>{{title}}</b> ,
-                <br>
-                Codigo: {{code}},
-                <br>
-                Precio: {{price}},
-                <br>
-                Stock: {{stock}},
-                <br>
-                Categoria: {{description}}
-            </li>
+    <div class="productos">
+        <ul>
+            {{#each prod}}
             <br>
-        {{/each}}
-    </ul>
+                <li>
+                    Producto:  <b>{{title}}</b> ,
+                    <br>
+                    Codigo: {{code}},
+                    <br>
+                    Precio: {{price}},
+                    <br>
+                    Stock: {{stock}},
+                    <br>
+                    Categoria: {{description}}
+                </li>
+            <br>
+            {{/each}}
+        </ul>
+    </div>
+
 
     <div class="paginate">
 
