@@ -19,7 +19,7 @@ viewsRouter.get("/real-time-products", async (req,res)=>{
 viewsRouter.get("/product/:pid", async (req,res)=>{
     const {pid} = req.query;
     const prod = await manager.getProductById(pid);
-    res.render("home", prod)
+    res.render("home", {prod})
 })
 
 export default viewsRouter;
