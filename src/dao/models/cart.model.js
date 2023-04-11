@@ -19,6 +19,10 @@ const cartSchema = new mongoose.Schema({
     },
 });
 
+cartSchema.pre("findOne", function(){
+    this.populate("products.pid");
+})
+
 cartSchema.plugin(mongoosePaginate);
 const cartModel = mongoose.model("carts", cartSchema);
 
