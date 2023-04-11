@@ -1,6 +1,7 @@
 import { Router, json } from "express";
 import {CartManager} from "../dao/index.js";
 import {ProductManager} from "../dao/index.js";
+import mongoose from "mongoose";
 
 
 const cartRouter = Router();
@@ -16,9 +17,14 @@ cartRouter.get('/', async (req, res)=>{
     res.send({status:"sucess", payload: carro});
 })
 
-//devuelve la cart. especificada
+//elimina del carro el prod. seleccionado
 
+cartRouter.delete("/:cid/products/:pid", async (req, res)=>{
+    const {cid,pid} = req.params;
+    const prodDel = await manager.deleteProd(cid, pid);
+    res.send({status:"success", payload: prodDel});
 
+})
 
 //agrega prod. al carro
 
@@ -44,7 +50,9 @@ cartRouter.delete("/:cid", async (req, res) => {
     res.send({status:"success", payload: result});
 })
 
+
 /*
+
 //agrego 1 carro con sus respectivos prod.
 
 cartRouter.post('/', async (req, res)=>{
