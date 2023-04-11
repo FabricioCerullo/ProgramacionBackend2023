@@ -19,4 +19,14 @@ export default class ProductManager{
         const productDelete= await prodModel.deleteOne({ _id: id })
         return productDelete;
     }
+    
+    async getProductById(pid){
+        try {
+            const findProd = await prodModel.findById(pid)
+            return findProd;            
+        } catch (error) {
+            return "hay un error mi her"
+        }
+
+    }
 }
