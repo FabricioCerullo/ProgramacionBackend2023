@@ -1,6 +1,6 @@
 const socket = io();
 
-const listaProd = document.getElementById("containerProd");
+const listaProd = document.getElementById("listaProd");
 socket.on("newListProd", async(d)=>{
     let prodLista = "";
     await d.forEach((e)=>{
