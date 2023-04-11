@@ -1,3 +1,4 @@
+import mongoose from "mongoose";
 import cartModel from "../models/cart.model.js";
 export default class CartManager{
     constructor(){
@@ -16,9 +17,19 @@ export default class CartManager{
 
     //agrega un prod. al carro
     async addProductToCart(cid, pid){
-        const cart = await cartModel.findById(cid);
-        cart.products.push({pid});
-        return cart.save();
+        try {
+            const findProd = await cartModel.findById(cid).populate("products.pid");
+            const prodExist = findProd.products.findIndex((x)=>x.products._id.toString() === pid);
+            if(prodExist!==-1){
+                findProd.products[prodExist].quantity++;
+            }else{
+                findProd.products.push({pid:pid, quantity:1});
+            }
+            return await findProd.save();
+        } catch (error) {
+            return "hay error loco";
+        }
+
     }
 
     //se actualiza el carrito con los req.body correspondientes
@@ -34,5 +45,13 @@ export default class CartManager{
         const cart = await cartModel.findById(cid);
         cart.products.remove({cid});
         return cart.save();
+    }
+
+    async deleteProd (cid, pid){
+        const prodDelete = await cartModel.updateOne(
+            {_id: cid},
+            {$pull:{products:{pid:pid}}},
+        )
+        return prodDelete;
     }
 }
