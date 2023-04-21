@@ -8,10 +8,9 @@ const router = Router();
 
 router.post('/registro', async (req, res) => {
     try {
-        const {email, password} = req.body;
-        const newUser = await userModel.create({email, password});
-        req.session.user = newUser.email;
-
+        const {first_name, last_name, email, age, password} = req.body;
+        const newUser = await userModel.create({first_name, last_name, email, age, password});
+        res.send( `Hola!, Bienvenido: ${newUser.email}`)
     } catch (error) {
         console.log("errorrrr");
     }
@@ -19,10 +18,10 @@ router.post('/registro', async (req, res) => {
 
 router.post('/login', async (req, res) => {
     const {email, password} = req.body;
-
     function validarEmail(email) {
         const userTrue = userModel.findOne({email});
         if (userTrue) {
+            req.session.user = userTrue.email;
             const domain = email.split('@')[1];
                 if (domain==="admin.com") {
                     return true;
