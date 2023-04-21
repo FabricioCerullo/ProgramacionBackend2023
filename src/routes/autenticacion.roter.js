@@ -10,7 +10,7 @@ router.post('/registro', async (req, res) => {
     try {
         const {first_name, last_name, email, age, password} = req.body;
         const newUser = await userModel.create({first_name, last_name, email, age, password});
-        res.send( `Hola!, Bienvenido: ${newUser.email}`)
+        res.send( `Hola!, Bienvenido: ${newUser.first_name}`)
     } catch (error) {
         console.log("errorrrr");
     }
