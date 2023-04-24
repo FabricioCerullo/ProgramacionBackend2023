@@ -4,12 +4,14 @@ import {Server} from "socket.io";
 import { mongoose} from "mongoose";
 import MongoStore from "connect-mongo";
 import session from "express-session";
+import passport from "passport";
 
 import { AutenRouter } from "./routes/autenticacion.roter.js";
 import viewsRouter from "./routes/views.router.js";
 import productRouter from "./routes/products.router.js";
 import cartRouter from "./routes/cart.router.js";
 import __dirname from "./utils.js";
+import { initializePassport } from "./config/passport.config.js";
 
 const app = express();
 
@@ -31,6 +33,10 @@ app.use(session({
     saveUninitialized:true
 }))
 
+//configuracion de passport
+initializePassport();
+app.use(passport.initialize());
+app.use(passport.session());
 
 // MONGO DB
 
