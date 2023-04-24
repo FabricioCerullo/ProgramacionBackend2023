@@ -38,5 +38,9 @@ viewsRouter.get('/registro', (req, res) => {
     res.render("registro");
 })
 
+viewsRouter.get('/forgot', (req, res) => {
+    res.render("forgot");
+})
+
 
 export default viewsRouter;
