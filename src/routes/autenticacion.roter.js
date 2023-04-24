@@ -1,43 +1,65 @@
 import { Router} from "express";
-import { userModel } from "../dao/models/user.model.js";
+import passport from "passport";
 
+import { userModel } from "../dao/models/user.model.js";
+import { createHash, isValidPassword } from "../utils.js";
 
 const router = Router();
 
 //rutas de autenticacion
 
-router.post('/registro', async (req, res) => {
+//registro con passport
+router.post("/registro", passport.authenticate("registroStrategy", {
+    failureRedirect: "/api/sessions/failed",
+}), async (req, res) => {
+    res.redirect("/login");
+}
+)
+
+router.post("/login", passport.authenticate("loginStrategy", {
+    failureRedirect: "/api/sessions/failed",
+}), async (req, res) => {
+    res.redirect("/perfil");
+})
+
+router.get("/github", passport.authenticate("github", {scope: ["user:email"] }),
+async (req,res)=>{
+    //
+}
+);
+
+router.get("/github-callback", passport.authenticate("github",{failureRedirect:"/failed"}),
+async (req,res)=>{
+    req.session.user = req.user;
+    //console.log(req.session.user = req.user);
+    res.redirect("/");
+}
+)
+
+//route para fallas 
+router.get("/failed", async(req, res) => {
+    console.log("falla al registrar!");
+    res.status(500).send("error");
+})
+
+
+router.post("/forgot", async(req, res) => {
     try {
-        const {first_name, last_name, email, age, password} = req.body;
-        const newUser = await userModel.create({first_name, last_name, email, age, password});
-        res.send( `Hola!, Bienvenido: ${newUser.first_name}`)
-    } catch (error) {
-        console.log("errorrrr");
-    }
-});
+        const {email,password} = req.body;
+        const user = await userModel.findOne({email:email});
 
-router.post('/login', async (req, res) => {
-    const {email, password} = req.body;
-    function validarEmail(email) {
-        const userTrue = userModel.findOne({email});
-        if (userTrue) {
-            req.session.user = userTrue.email;
-            const domain = email.split('@')[1];
-                if (domain==="admin.com") {
-                    return true;
-                }else {return false;} 
+        if (user) {
+            user.password = createHash(password);
+            const userUpdate = await userModel.findOneAndUpdate({email:user.email}, user);
+            res.status(200).send("Contraseña actualizada!")
+
         }else{
-            return false;
+           res.status(401).send("no existe el correo");
         }
+    } catch (error) {
+        res.status(401).send("error");
     }
 
-    if (validarEmail(email)){
-        console.log("correo valido, es admin");         
-        res.redirect("/perfil");
-    }
-    else{
-        console.log("correo invalido, no es admin");
-    }
 })
 
 router.post("/loguot", (req, res) => {
@@ -48,5 +70,53 @@ router.post("/loguot", (req, res) => {
           res.redirect("/login");
     })
 })
+
+
+//registro y login ---- 
+ /*
+
+router.post('/registro', async (req, res) => {
+    try {
+        const {first_name, last_name, email, age, password} = req.body;
+        const newUser = {
+            first_name,
+            last_name,
+            email, 
+            age,
+            password:createHash(password)
+        };
+        const userCreated = await userModel.create(newUser);
+        res.send( `Hola!, Bienvenido: ${userCreated.first_name}`)
+        }catch (error) {
+        res.status(401).send("error");
+    }
+});
+
+
+router.post('/login', async (req, res) => {
+    try {
+        const {email,password} = req.body;
+        const user = await userModel.findOne({email:email});
+
+        if (user) {
+
+            if (isValidPassword(user, password)) {
+                req.session.user = user.email;
+                const domain = email.split('@')[1];
+                if (domain==="admin.com") {
+                    res.status(200).send("el usuario es valido, es admin.");
+                    res.redirect("/perfil");
+                }else {
+                    res.send("Login Exitoso!")
+            }
+        }else{
+           res.status(401).send("no existe el correo");
+        }
+    }
+    } catch (error) {
+        res.status(401).send("error");
+    }
+})
+*/
 
 export {router as AutenRouter};
