@@ -3,18 +3,22 @@ import passport from "passport";
 
 import { userModel } from "../dao/models/user.model.js";
 import { createHash, isValidPassword } from "../utils.js";
+import jwt from "jsonwebtoken"
+import { options } from "../config/options.js";
 
 const router = Router();
 
 //rutas de autenticacion
 
 //registro con passport
+
 router.post("/registro", passport.authenticate("registroStrategy", {
     failureRedirect: "/api/sessions/failed",
 }), async (req, res) => {
     res.redirect("/login");
 }
 )
+
 
 router.post("/login", passport.authenticate("loginStrategy", {
     failureRedirect: "/api/sessions/failed",
@@ -36,9 +40,19 @@ async (req,res)=>{
 }
 )
 
+router.get("/current", passport.authenticate("authSessions"),
+async (req, res) => {
+    if (req.session.user) {
+        res.status(200).json({user:req.session.user});
+    }else{
+        res.status(401).json({error:"No se ha iniciado sesion crack!"});
+    }
+    }
+)
+
 //route para fallas 
 router.get("/failed", async(req, res) => {
-    console.log("falla al registrar!");
+    console.log("falla!... algo salio mal");
     res.status(500).send("error");
 })
 
@@ -62,7 +76,8 @@ router.post("/forgot", async(req, res) => {
 
 })
 
-router.post("/loguot", (req, res) => {
+
+router.get("/logout", (req, res) => {
     req.session.destroy((err) => {
         if (err) {
             return res.status(500).send("Internal server error");
@@ -70,7 +85,6 @@ router.post("/loguot", (req, res) => {
           res.redirect("/login");
     })
 })
-
 
 //registro y login ---- 
  /*
