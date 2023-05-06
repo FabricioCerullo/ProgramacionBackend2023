@@ -3,7 +3,7 @@ import {engine} from "express-handlebars";
 import {Server} from "socket.io";
 import { mongoose} from "mongoose";
 import MongoStore from "connect-mongo";
-import session from "express-session";
+import session, { Cookie } from "express-session";
 import passport from "passport";
 
 import { AutenRouter } from "./routes/autenticacion.roter.js";
@@ -12,25 +12,23 @@ import productRouter from "./routes/products.router.js";
 import cartRouter from "./routes/cart.router.js";
 import __dirname from "./utils.js";
 import { initializePassport } from "./config/passport.config.js";
+import { options } from "./config/options.js";
+import cookieParser from "cookie-Parser";
 
 const app = express();
-
-//bases de datos
-const database = "mongodb+srv://fabricioAdmin:12345@coderbackend39700.sarerxd.mongodb.net/prueba1?retryWrites=true&w=majority"
-
 
 //middlewares
 
 app.use(express.json());
 app.use(express.urlencoded({extended:true}));
-
+app.use(cookieParser());
 //configuracion de la sesion
 
 app.use(session({
-    store:MongoStore.create({mongoUrl:database}),
+    store:MongoStore.create({mongoUrl:options.mongoDB.url}),
     secret:"claveSecreta",
     resave:true,
-    saveUninitialized:true
+    saveUninitialized:true,
 }))
 
 //configuracion de passport
@@ -40,7 +38,7 @@ app.use(passport.session());
 
 // MONGO DB
 
-mongoose.connect(database).then((connection)=>{
+mongoose.connect(options.mongoDB.url).then((connection)=>{
     console.log("Connected to Data Base!");
 })
 
