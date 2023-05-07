@@ -32,7 +32,7 @@ async (req,res)=>{
 }
 );
 
-router.get("/github-callback", passport.authenticate("github",{failureRedirect:"/failed"}),
+router.get("/github-callback", passport.authenticate("github",{failureRedirect:"/api/sessions/failed"}),
 async (req,res)=>{
     req.session.user = req.user;
     //console.log(req.session.user = req.user);
@@ -40,7 +40,7 @@ async (req,res)=>{
 }
 )
 
-router.get("/current", passport.authenticate("authSessions"),
+router.get("/current", passport.authenticate("authSessions",{failureRedirect:"/api/sessions/failed"}),
 async (req, res) => {
     if (req.session.user) {
         res.status(200).json({user:req.session.user});
