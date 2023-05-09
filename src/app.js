@@ -28,13 +28,14 @@ app.use(session({
     store:MongoStore.create({mongoUrl:options.mongoDB.url}),
     secret:"claveSecreta",
     resave:true,
-    saveUninitialized:true,
+    saveUninitialized:false,
 }))
 
 //configuracion de passport
 initializePassport();
 app.use(passport.initialize());
 app.use(passport.session());
+
 
 // MONGO DB
 
