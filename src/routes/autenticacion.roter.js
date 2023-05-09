@@ -8,6 +8,15 @@ import { options } from "../config/options.js";
 
 const router = Router();
 
+//middleware de autenticacion
+const authMiddleware = async (req, res, next) => {
+    if (req.isAuthenticated()) {
+        const userId = req.session.passport.user;
+        const user =await userModel.findById(userId)
+          if (!user) return res.status(401).json({ error: 'No se ha iniciado sesión.' });
+          req.user = user;
+          next();
+}}
 //rutas de autenticacion
 
 //registro con passport
@@ -40,14 +49,9 @@ async (req,res)=>{
 }
 )
 
-router.get("/current", passport.authenticate("authSessions",{failureRedirect:"/api/sessions/failed"}),
-async (req, res) => {
-    if (req.session.user) {
-        res.status(200).json({user:req.session.user});
-    }else{
-        res.status(401).json({error:"No se ha iniciado sesion crack!"});
-    }
-    }
+router.get("/current",authMiddleware,(req, res) => {
+    res.status(200).json({ user: req.user });
+}
 )
 
 //route para fallas 
