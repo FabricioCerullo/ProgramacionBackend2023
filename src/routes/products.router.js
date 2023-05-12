@@ -3,90 +3,19 @@ import {ProductManager} from "../dao/index.js";
 import __dirname from "../utils.js";
 import prodModel from "../dao/models/prod.model.js";
 
+import { getProductsController, getProductIDController,addProductController, deleteProductController} from "../controller/index.controller.js";
 const productRouter = Router();
 
-
-const manager = new ProductManager();
+//const manager = new ProductManager();
 productRouter.use(json());
 
-
-productRouter.get('/', async (req,res) => {
-    try {
-        const products = await manager.getProducts();    
-         const {limit} = req.query;
-         const {page} = req.query;
-         const prodFilter = await prodModel.paginate(
-            {},
-            {limit: limit, page: page}
-         )
-         if (limit||page) { 
-            return res.send({status:"sucess", payload: prodFilter});
-         } else {
-            res.send({status:"sucess", payload: products});
-         }
-    } catch (error) {
-        res.status(404).send({status: "error", error: "Ha ocurrido un error!"});
-    }
-})
-//-----> SOLO LEE EL GET "/", LUEGO NO REALIZA OTRA OPERACION
-
-
-
+//devuelve todos los productos
+productRouter.get('/',getProductsController)
 //devuelve el prod. con la id indicada
-
-productRouter.get("/:id", async(req, res) => {
-    try {
-         const { id } = req.params;
-         const product = await manager.getProductById(parseInt(id));
-         res.send({status:"sucess", payload: product});
-     } catch (error) {
-         res.status(404).send({status: "error", error: "Ha ocurrido un error!2"});
-     }
- 
- })
-
-
+productRouter.get("/:id",getProductIDController)
 //se agrega un nuevo prod. 
-
-productRouter.post("/", async(req, res) => {
-    try {
-        const {title, description, price, thumbail, code, stock} = req.body;
-        const newProd = await manager.addProduct({title, description,price, thumbail, code, stock});
-        res.status(201).send({status: "ok", payload: newProd});
-    } catch (error) {
-        res.status(404).send({status: "error", error: "Ha ocurrido un error!"});
-    }
-
-})
-
-//se modifica algun elemento del prod. especificado con la id.
-
-productRouter.put("/:pid", async(req, res) => {
-    try {
-        const {pid} = req.params;
-        const id = parseInt(pid);
-        await manager.updateProduct(id, req.body);
-        res.send({status: "succes", payload: await manager.getProductById(id)});
-    } catch (error) {
-        res.status(404).send({status: "error", error: "Ha ocurrido un error!"});
-    }
-})
-
-
+productRouter.post("/", addProductController)
 //se elimina el prod. especificado con la id.
-
-productRouter.delete("/:pid", async (req, res)=> {
-    try {
-        const {pid} = req.params
-        const id = parseInt(pid)
-        await manager.deleteProduct(id);
-        res.send({status: "succes", payload: "Su Producto ha sido elimando exitosamente!"})
-    } catch (error) {
-        res.status(404).send({status: "error", error: "Ha ocurrido un error!"});
-    }
-
-})
-
-
+productRouter.delete("/:pid",deleteProductController)
 
 export default productRouter;
