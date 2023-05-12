@@ -1,3 +1,4 @@
+//paso 1 - luego pasar a service
 import prodModel from "../models/prod.model.js";
 export default class ProductManager{
 
@@ -30,3 +31,4 @@ export default class ProductManager{
 
     }
 }
+
