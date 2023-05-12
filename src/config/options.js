@@ -7,6 +7,9 @@ const MONGO_DB_PASS= process.env.MONGO_DB_PASS;
 const MONGO_DB_NAME= process.env.MONGO_DB_NAME;
 const SECRET_TOKEN= process.env.SECRET_TOKEN;
 const COOKIE_TOKEN= process.env.COOKIE_TOKEN;
+const CLIENTIDGITHUB = process.env.CLIENTIDGITHUB;
+const CLIENTSECRETGITHUB = process.env.CLIENTSECRETGITHUB;
+const CALLBACKURLGITHUB = process.env.CALLBACKURLGITHUB;
 
 export const options = {
     mongoDB:{
@@ -16,5 +19,10 @@ export const options = {
         port:PORT,
         secretToken:SECRET_TOKEN,
         cookieToken:COOKIE_TOKEN
+    },
+    gitHub:{
+        clientID:CLIENTIDGITHUB,
+        clientSecret:CLIENTIDGITHUB,
+        callbackURL:CALLBACKURLGITHUB
     }
 }
