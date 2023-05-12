@@ -10,10 +10,12 @@ const COOKIE_TOKEN= process.env.COOKIE_TOKEN;
 const CLIENTIDGITHUB = process.env.CLIENTIDGITHUB;
 const CLIENTSECRETGITHUB = process.env.CLIENTSECRETGITHUB;
 const CALLBACKURLGITHUB = process.env.CALLBACKURLGITHUB;
+const MONGOSECRET = process.env.MONGOSECRET;
 
 export const options = {
     mongoDB:{
-        url:`mongodb+srv://${MONGO_DB_USER}:${MONGO_DB_PASS}@coderbackend39700.sarerxd.mongodb.net/${MONGO_DB_NAME}?retryWrites=true&w=majority`
+        url:`mongodb+srv://${MONGO_DB_USER}:${MONGO_DB_PASS}@coderbackend39700.sarerxd.mongodb.net/${MONGO_DB_NAME}?retryWrites=true&w=majority`,
+        secret: MONGOSECRET
     },
     server:{
         port:PORT,
