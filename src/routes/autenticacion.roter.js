@@ -1,6 +1,6 @@
 import { Router} from "express";
 import passport from "passport";
-import { registroRedirectController,failedRedirectController,loginRedirectController,gitHubRedirectController,currentRedirectController,forgotRedirectController,logoutRedirectController,authMiddleware } from "../controller/index.controller.js";
+import {registroRedirectController,failedRedirectController,loginRedirectController,gitHubRedirectController,currentRedirectController,forgotRedirectController,logoutRedirectController,authMiddleware,prodDTO } from "../controller/index.controller.js";
 
 const router = Router();
 
@@ -12,5 +12,6 @@ router.get("/current",authMiddleware,currentRedirectController)
 router.get("/failed", failedRedirectController)
 router.post("/forgot",forgotRedirectController)
 router.get("/logout",logoutRedirectController)
+
 
 export {router as AutenRouter};
