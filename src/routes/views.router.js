@@ -1,10 +1,9 @@
 import { json, Router } from "express";
-import {ProductManager} from "../dao/index.js";
 
-import { homeRenderProductsController,realTimeProductsRenderController,productIDRenderController,loginController,perfilController,registroController,forgotController} from "../controller/index.controller.js";
+import {homeRenderProductsController,realTimeProductsRenderController,productIDRenderController,loginController,perfilController,registroController,forgotController} from "../controller/index.controller.js";
 
 const viewsRouter = Router();
-const manager = new ProductManager();
+//const manager = new ProductManager();
 viewsRouter.use(json());
 
                 //VISTA DE LOS PRODUCTOS
