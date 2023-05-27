@@ -14,6 +14,7 @@ import __dirname from "./utils.js";
 import { initializePassport } from "./config/passport.config.js";
 import { options } from "./config/options.js";
 import cookieParser from "cookie-Parser";
+import { connectDB } from "./config/db_Connetions.js";
 
 const app = express();
 
@@ -40,9 +41,7 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 // MONGO DB
-mongoose.connect(options.mongoDB.url).then((connection)=>{
-    console.log("Connected to Data Base!");
-})
+connectDB();
 
 //path
 app.use(express.static(__dirname + "/../public"));
