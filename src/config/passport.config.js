@@ -6,6 +6,7 @@ import jwt from "jsonwebtoken"
 import { userModel } from "../dao/models/user.model.js";
 import { createHash, isValidPassword } from "../utils.js";
 import { options } from "./options.js";
+import { transporter } from "../config/gmail.js";
 
 const localStrategy = local.Strategy;
 
@@ -37,6 +38,25 @@ const initializePassport = () => {
                     newUser.role = "admin";
                 }
                 const userCreated = await userModel.create(newUser);
+
+                const emailTemplate = `
+                <div>
+                <h1>Bienvenido!!</h1>      
+                <p>Ya puedes empezar a usar nuestros servicios</p>
+                <a href="https://www.google.com/">Explorar</a>
+                </div>`;
+            
+                try {
+                  const content = await transporter.sendMail({
+                        from:"node js.",
+                        to:newUser.email,
+                        subject:"prueba email",
+                        html:emailTemplate
+                    });
+                   // res.status(200).send("Correo enviado correctamente!")
+                } catch (error) {
+                    console.log(error);
+                }
 
                 return done(null, userCreated);
             } catch (error) {
