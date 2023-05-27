@@ -11,6 +11,9 @@ const CLIENTIDGITHUB = process.env.CLIENTIDGITHUB;
 const CLIENTSECRETGITHUB = process.env.CLIENTSECRETGITHUB;
 const CALLBACKURLGITHUB = process.env.CALLBACKURLGITHUB;
 const MONGOSECRET = process.env.MONGOSECRET;
+const PERSISNTECE = process.env.PERSISNTECE;
+const ADMINEMAIL = process.env.ADMINEMAIL;
+const ADMINPASSWORD = process.env.ADMINPASSWORD;
 
 export const options = {
     mongoDB:{
@@ -26,5 +29,10 @@ export const options = {
         clientID:CLIENTIDGITHUB,
         clientSecret:CLIENTIDGITHUB,
         callbackURL:CALLBACKURLGITHUB
+    },
+    persistence:PERSISNTECE,
+    gmail:{
+        adminEmail:ADMINEMAIL,
+        adminPassword:ADMINPASSWORD
     }
 }
