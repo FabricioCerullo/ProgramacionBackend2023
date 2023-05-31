@@ -3,11 +3,13 @@ import { userModel } from "../dao/models/user.model.js";
 import prodModel from "../dao/models/prod.model.js";
 import { createHash, isValidPassword } from "../utils.js";
 import { GetProductDTO , GetUserDTO} from "../dao/dto/index.dto.js";
-import {productService, cartService} from "../repository/index.service_repository.js"
+import {productService, cartService, generateProdrInfoError} from "../repository/index.service_repository.js"
 import { v4 as uuidv4 } from 'uuid';
 import { ticketModel } from "../dao/models/ticket.model.js";
 import { transporter } from "../config/gmail.js";
-
+import { faker } from '@faker-js/faker';
+import { CustomError } from "../repository/index.service_repository.js";
+import { Eerror } from "../enums/Eerror.js";
 
                     //PRODUCTOS
 
@@ -42,14 +44,18 @@ export const getProductIDController = async (req, res) => {
  }
 
  export const addProductController = async(req, res) => {
-    try {
+
         const {title, description, price, thumbail, code, stock} = req.body;
+        if (!title || !description || !price || !code || !stock) {
+        CustomError.createError({
+            name:"Invalid field",
+            cause:generateProdrInfoError(req.body),
+            message:"El campo rellenado es invalido",
+            errorCode:Eerror.INVALID_FIELD_ERROR
+        })
+    }
         const newProd = await productService.addProduct({title, description,price, thumbail, code, stock});
         res.status(201).send({status: "ok", payload: newProd});
-    } catch (error) {
-        res.status(404).send({status: "error", error: "Ha ocurrido un error!"});
-    }
-
 }
 
 export const deleteProductController = async (req, res)=> {
@@ -60,6 +66,34 @@ export const deleteProductController = async (req, res)=> {
         res.send({status: "succes", payload: "Su Producto ha sido elimando exitosamente!"})
     } catch (error) {
         res.status(404).send({status: "error", error: "Ha ocurrido un error!"});
+    }
+}
+
+
+export const mockingProducts = async (req, res)=>{
+    try {
+        const {commerce, image, string, } = faker;
+        const generateProduct = ()=>{
+            return{
+                title:commerce.product(),
+                description:commerce.productDescription(),
+                price:parseFloat(commerce.price()),
+                thumbail:image.url(),
+                code:string.numeric(13),
+                stock:parseInt(string.numeric(2))
+            }
+        }
+        for (let i = 0; i < 100; i++) {
+            let products = [];
+            for (let i = 0; i < 100; i++) {
+                const product = generateProduct();
+                products.push(product);
+            }
+            res.json({products});
+            
+        }
+    } catch (error) {
+        console.log(error);
     }
 }
 
