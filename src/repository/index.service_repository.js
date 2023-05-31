@@ -68,8 +68,38 @@ export class RepositoryManager{
     async addNewCart(){
         const newCart = await CartsDAO.addNewCart();
         return newCart;
-    }
+    }      
  
+}
+
+export class CustomError{
+    static createError({name="Error", cause, message, errorCode}){
+        const error = new Error(message,{cause});
+        error.name=name;
+        error.code=errorCode;
+        //console.log("error", error.cause);
+        throw error;
+    }
+}
+
+export const generateUserInfoError = (user) =>{
+    return `Una o mas propiedades ingresadas son invalidas.
+    Las propiedades requeridas son:
+    first_name : se solicita un dato tipo String, se recibio ${user.first_name}
+    last_name : se solicita un dato tipo String, se recibio ${user.last_name}
+    age :se solicita un dato tipo Number, se recibio ${user.age}
+    `
+}
+
+export const generateProdrInfoError = (prod) =>{
+    return `Una o mas propiedades ingresadas son invalidas.
+    Las propiedades requeridas son:
+     title : se solicita un dato tipo String, se recibio ${prod.title}
+     description : se solicita un dato tipo String, se recibio ${prod.description}
+     price : se solicita un dato tipo Number, se recibio ${prod.price}
+     code : se solicita un dato tipo Number, se recibio ${prod.code}
+     stock : se solicita un dato tipo Number, se recibio ${prod.stock}
+    `
 }
 
 
