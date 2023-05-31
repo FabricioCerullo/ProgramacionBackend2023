@@ -1,0 +1,7 @@
+export const Eerror = {
+    INVALID_TYPES_ERROR:1,
+    DATABASE_ERROR:2,
+    AUTH_ERROR:3,
+    INVALID_FIELD_ERROR:4,
+}
+
