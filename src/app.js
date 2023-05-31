@@ -15,6 +15,7 @@ import { initializePassport } from "./config/passport.config.js";
 import { options } from "./config/options.js";
 import cookieParser from "cookie-Parser";
 import { connectDB } from "./config/db_Connetions.js";
+import { errorIndex } from "./middlewares/error/index.error.js";
 
 const app = express();
 
@@ -51,6 +52,9 @@ app.use("/api/products", productRouter);
 app.use("/api/cart", cartRouter);
 app.use("/", viewsRouter);
 app.use("/api/sessions", AutenRouter);
+
+//errores
+app.use(errorIndex);
 
 //handlebars
 app.engine('handlebars', engine());
