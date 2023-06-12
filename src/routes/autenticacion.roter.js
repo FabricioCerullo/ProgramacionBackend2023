@@ -13,5 +13,4 @@ router.get("/failed", failedRedirectController)
 router.post("/forgot",forgotRedirectController)
 router.get("/logout",logoutRedirectController)
 
-
 export {router as AutenRouter};
