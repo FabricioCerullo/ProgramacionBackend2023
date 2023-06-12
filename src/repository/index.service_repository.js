@@ -103,5 +103,9 @@ export const generateProdrInfoError = (prod) =>{
 }
 
 
+
+
+
+
 export const productService = new RepositoryManager (ManagerDAO);
 export const cartService = new RepositoryManager (CartsDAO);
