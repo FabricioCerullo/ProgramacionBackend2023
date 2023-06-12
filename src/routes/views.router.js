@@ -1,6 +1,7 @@
 import { json, Router } from "express";
 
-import {homeRenderProductsController,realTimeProductsRenderController,productIDRenderController,loginController,perfilController,registroController,forgotController} from "../controller/index.controller.js";
+import {Plogger,homeRenderProductsController,realTimeProductsRenderController,productIDRenderController,loginController,perfilController,registroController,forgotController} from "../controller/index.controller.js";
+
 
 const viewsRouter = Router();
 //const manager = new ProductManager();
@@ -21,6 +22,6 @@ viewsRouter.get('/login',loginController)
 viewsRouter.get('/perfil', perfilController)
 viewsRouter.get('/registro',registroController)
 viewsRouter.get('/forgot',forgotController )
-
+//viewsRouter.get('/test',Plogger)
 
 export default viewsRouter;
