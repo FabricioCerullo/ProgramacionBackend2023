@@ -1,7 +1,7 @@
 import { Eerror } from "../../enums/Eerror.js";
 
 export const errorIndex = (error, req, res, next) => {
-    console.log(error.code);
+    //console.log(error.code);
     switch (error.code) {
         case Eerror.INVALID_FIELD_ERROR:
             res.json({status: 'error', error:error.meesage});
