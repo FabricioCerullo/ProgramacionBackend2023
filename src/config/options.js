@@ -14,6 +14,8 @@ const MONGOSECRET = process.env.MONGOSECRET;
 const PERSISNTECE = process.env.PERSISNTECE;
 const ADMINEMAIL = process.env.ADMINEMAIL;
 const ADMINPASSWORD = process.env.ADMINPASSWORD;
+const NODE_ENV = process.env.NODE_ENV;
+
 
 export const options = {
     mongoDB:{
@@ -34,5 +36,8 @@ export const options = {
     gmail:{
         adminEmail:ADMINEMAIL,
         adminPassword:ADMINPASSWORD
+    },
+    entorno:{
+        modo:NODE_ENV
     }
 }
