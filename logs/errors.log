@@ -1,0 +1,296 @@
+{"level":"http","message":"/ - method:GET"}
+{"level":"http","message":"/ - method:GET"}
+{"level":"http","message":"/ - method:GET"}
+{"level":"http","message":"/ - method:GET"}
+{"level":"http","message":"/ - method:GET"}
+{"level":"http","message":"/ - method:GET"}
+{"level":"http","message":"/ - method:GET"}
+{"level":"http","message":"/ - method:GET"}
+{"level":"http","message":"/favicon.ico - method:GET"}
+{"level":"http","message":"/ - method:GET"}
+{"level":"http","message":"/ - method:GET"}
+{"level":"http","message":"/test - method:GET"}
+{"level":"http","message":"/test - method:GET"}
+{"level":"http","message":"/api/products/test - method:GET"}
+{"level":"http","message":"/api/products/test - method:GET"}
+{"level":"http","message":"/api/products/test - method:GET"}
+{"level":"http","message":"/api/products/test - method:GET"}
+{"level":"http","message":"/api/products/test - method:GET"}
+{"level":"http","message":"/api/products/test - method:GET"}
+{"level":"http","message":"/api/products/test -hola  method:GET"}
+{"level":"http","message":"/api/products/test -hola  method:GET"}
+{"level":"http","message":"/api/products/test -hola  method:GET"}
+{"level":"http","message":"/api/products/test -hola  method:GET"}
+{"level":"http","message":"/api/products/test -hola  method:GET"}
+{"level":"http","message":"/api/products/test -hola  method:GET"}
+{"level":"http","message":"/loggerTest -hola  method:GET"}
+{"level":"http","message":"/test -hola  method:GET"}
+{"level":"http","message":"/test -hola  method:GET"}
+{"level":"http","message":"/test -hola  method:GET"}
+{"level":"http","message":"/test -hola  method:GET"}
+{"level":"http","message":"nivel http"}
+{"level":"info","message":"nivel info"}
+{"level":"warn","message":"nivel warn"}
+{"level":"error","message":"nivel error"}
+{"level":"http","message":"/test -hola  method:GET"}
+{"level":"http","message":"nivel http"}
+{"level":"info","message":"nivel info"}
+{"level":"warn","message":"nivel warn"}
+{"level":"error","message":"nivel error"}
+{"level":"http","message":"/test -hola  method:GET"}
+{"level":"http","message":"nivel http"}
+{"level":"info","message":"nivel info"}
+{"level":"warn","message":"nivel warn"}
+{"level":"error","message":"nivel error"}
+{"level":"http","message":"/test -hola  method:GET"}
+{"level":"http","message":"nivel http"}
+{"level":"info","message":"nivel info"}
+{"level":"warn","message":"nivel warn"}
+{"level":"error","message":"nivel error"}
+{"level":"http","message":"/test -hola  method:GET"}
+{"level":"http","message":"nivel http"}
+{"level":"info","message":"nivel info"}
+{"level":"warn","message":"nivel warn"}
+{"level":"error","message":"nivel error"}
+{"level":"http","message":"/test -hola  method:GET"}
+{"level":"http","message":"nivel http"}
+{"level":"info","message":"nivel info"}
+{"level":"warn","message":"nivel warn"}
+{"level":"error","message":"nivel error"}
+{"level":"http","message":"/test -hola  method:GET"}
+{"level":"http","message":"nivel http"}
+{"level":"info","message":"nivel info"}
+{"level":"warn","message":"nivel warn"}
+{"level":"error","message":"nivel error"}
+{"level":"http","message":"/test -hola  method:GET"}
+{"level":"http","message":"nivel http"}
+{"level":"info","message":"nivel info"}
+{"level":"warn","message":"nivel warn"}
+{"level":"error","message":"nivel error"}
+{"level":"http","message":"/test -hola  method:GET"}
+{"level":"http","message":"nivel http"}
+{"level":"info","message":"nivel info"}
+{"level":"warn","message":"nivel warn"}
+{"level":"error","message":"nivel error"}
+{"level":"http","message":"/test -hola  method:GET"}
+{"level":"http","message":"nivel http"}
+{"level":"info","message":"nivel info"}
+{"level":"warn","message":"nivel warn"}
+{"level":"error","message":"nivel error"}
+{"level":"http","message":"/test -hola  method:GET"}
+{"level":"http","message":"nivel http"}
+{"level":"info","message":"nivel info"}
+{"level":"warn","message":"nivel warn"}
+{"level":"error","message":"nivel error"}
+{"level":"http","message":"/test -hola  method:GET"}
+{"level":"http","message":"nivel http"}
+{"level":"info","message":"nivel info"}
+{"level":"warn","message":"nivel warn"}
+{"level":"error","message":"nivel error"}
+{"level":"http","message":"/test -hola  method:GET"}
+{"level":"http","message":"nivel http"}
+{"level":"info","message":"nivel info"}
+{"level":"warn","message":"nivel warn"}
+{"level":"error","message":"nivel error"}
+{"level":"http","message":"/test -hola  method:GET"}
+{"level":"http","message":"nivel http"}
+{"level":"info","message":"nivel info"}
+{"level":"warn","message":"nivel warn"}
+{"level":"error","message":"nivel error"}
+{"level":"http","message":"/test -hola  method:GET"}
+{"level":"http","message":"nivel http"}
+{"level":"info","message":"nivel info"}
+{"level":"warn","message":"nivel warn"}
+{"level":"error","message":"nivel error"}
+{"level":"http","message":"/test -hola  method:GET"}
+{"level":"http","message":"nivel http"}
+{"level":"info","message":"nivel info"}
+{"level":"warn","message":"nivel warn"}
+{"level":"error","message":"nivel error"}
+{"level":"http","message":"/test - method:GET"}
+{"level":"http","message":"nivel http"}
+{"level":"info","message":"nivel info"}
+{"level":"warn","message":"nivel warn"}
+{"level":"error","message":"nivel error"}
+{"level":"http","message":"/test - method:GET"}
+{"level":"http","message":"nivel http"}
+{"level":"info","message":"nivel info"}
+{"level":"warn","message":"nivel warn"}
+{"level":"error","message":"nivel error"}
+{"level":"http","message":"/test - method:GET"}
+{"level":"http","message":"nivel http"}
+{"level":"info","message":"nivel info"}
+{"level":"warn","message":"nivel warn"}
+{"level":"error","message":"nivel error"}
+{"level":"http","message":"/test - method:GET"}
+{"level":"http","message":"nivel http"}
+{"level":"info","message":"nivel info"}
+{"level":"warn","message":"nivel warn"}
+{"level":"error","message":"nivel error"}
+{"level":"http","message":"/test - method:GET"}
+{"level":"http","message":"nivel http"}
+{"level":"info","message":"nivel info"}
+{"level":"warn","message":"nivel warn"}
+{"level":"error","message":"nivel error"}
+{"level":"http","message":"/test - method:GET"}
+{"level":"http","message":"nivel http"}
+{"level":"info","message":"nivel info"}
+{"level":"warn","message":"nivel warn"}
+{"level":"error","message":"nivel error"}
+{"level":"http","message":"/test - method:GET"}
+{"level":"http","message":"nivel http"}
+{"level":"info","message":"nivel info"}
+{"level":"warn","message":"nivel warn"}
+{"level":"error","message":"nivel error"}
+{"level":"http","message":"/test - method:GET"}
+{"level":"http","message":"nivel http"}
+{"level":"info","message":"nivel info"}
+{"level":"warn","message":"nivel warn"}
+{"level":"error","message":"nivel error"}
+{"level":"http","message":"/test - method:GET"}
+{"level":"http","message":"nivel http"}
+{"level":"info","message":"nivel info"}
+{"level":"warn","message":"nivel warn"}
+{"level":"error","message":"nivel error"}
+{"level":"http","message":"/test - method:GET"}
+{"level":"http","message":"nivel http"}
+{"level":"info","message":"nivel info"}
+{"level":"warn","message":"nivel warn"}
+{"level":"error","message":"nivel error"}
+{"level":"http","message":"nivel http"}
+{"level":"info","message":"nivel info"}
+{"level":"warn","message":"nivel warn"}
+{"level":"error","message":"nivel error"}
+{"level":"http","message":"nivel http"}
+{"level":"info","message":"nivel info"}
+{"level":"warn","message":"nivel warn"}
+{"level":"error","message":"nivel error"}
+{"level":"http","message":"nivel http"}
+{"level":"info","message":"nivel info"}
+{"level":"warn","message":"nivel warn"}
+{"level":"error","message":"nivel error"}
+{"level":"http","message":"nivel http"}
+{"level":"info","message":"nivel info"}
+{"level":"warn","message":"nivel warn"}
+{"level":"error","message":"nivel error"}
+{"level":"http","message":"nivel http"}
+{"level":"info","message":"nivel info"}
+{"level":"warn","message":"nivel warn"}
+{"level":"error","message":"nivel error"}
+{"level":"http","message":"nivel http"}
+{"level":"info","message":"nivel info"}
+{"level":"warn","message":"nivel warn"}
+{"level":"error","message":"nivel error"}
+{"level":"http","message":"nivel http"}
+{"level":"info","message":"nivel info"}
+{"level":"warn","message":"nivel warn"}
+{"level":"error","message":"nivel error"}
+{"level":"http","message":"nivel http"}
+{"level":"info","message":"nivel info"}
+{"level":"warn","message":"nivel warn"}
+{"level":"error","message":"nivel error"}
+{"level":"warn","message":"nivel warn"}
+{"level":"error","message":"nivel error"}
+{"level":"warn","message":"nivel warn"}
+{"level":"error","message":"nivel error"}
+{"level":"warn","message":"nivel warn"}
+{"level":"error","message":"nivel error"}
+{"level":"warn","message":"nivel warn"}
+{"level":"error","message":"nivel error"}
+{"level":"warn","message":"nivel warn"}
+{"level":"error","message":"nivel error"}
+{"level":"warn","message":"nivel warn"}
+{"level":"error","message":"nivel error"}
+{"level":"warn","message":"warn"}
+{"level":"error","message":"error"}
+{"level":"warn","message":"warn"}
+{"level":"error","message":"error"}
+{"level":"warn","message":"warn"}
+{"level":"error","message":"error"}
+{"level":"warn","message":"warn"}
+{"level":"error","message":"error"}
+{"level":"warn","message":"warn"}
+{"level":"error","message":"error"}
+{"level":"warn","message":"warn"}
+{"level":"error","message":"error"}
+{"level":"warn","message":"warn"}
+{"level":"error","message":"error"}
+{"level":"warn","message":"warn"}
+{"level":"error","message":"error"}
+{"level":"http","message":"http"}
+{"level":"info","message":"info"}
+{"level":"warn","message":"warn"}
+{"level":"error","message":"error"}
+{"level":"http","message":"http"}
+{"level":"info","message":"info"}
+{"level":"warn","message":"warn"}
+{"level":"error","message":"error"}
+{"level":"http","message":"/test - method:GET"}
+{"level":"http","message":"/test - method:GET"}
+{"level":"http","message":"/test - method:GET"}
+{"level":"http","message":"/test - method:GET"}
+{"level":"http","message":"/test - method:GET"}
+{"level":"http","message":"/test - method:GET"}
+{"level":"http","message":"/test - method:GET"}
+{"level":"http","message":"/test - method:GET"}
+{"level":"http","message":"/test - method:GET"}
+{"level":"http","message":"/test - method:GET"}
+{"level":"http","message":"GET en /test"}
+{"level":"http","message":"GET en /test"}
+{"level":"http","message":"GET en /test"}
+{"level":"http","message":"GET en /test"}
+{"level":"info","message":"GET en /test"}
+{"level":"info","message":"GET en /test"}
+{"level":"info","message":"GET en /test"}
+{"level":"info","message":"GET en /test"}
+{"level":"info","message":"GET en /test"}
+{"level":"info","message":"GET en /test"}
+{"level":"info","message":"GET en /test"}
+{"level":"info","message":"GET en /test"}
+{"level":"info","message":"GET en /test"}
+{"level":"info","message":"GET en /test"}
+{"level":"info","message":"GET en /test"}
+{"level":"info","message":"GET en /test"}
+{"level":"info","message":"GET en /test"}
+{"level":"info","message":"GET en /test"}
+{"level":"http","message":"http"}
+{"level":"info","message":"info"}
+{"level":"warn","message":"warn"}
+{"level":"error","message":"error"}
+{"level":"info","message":"GET en /test"}
+{"level":"http","message":"http"}
+{"level":"info","message":"info"}
+{"level":"warn","message":"warn"}
+{"level":"error","message":"error"}
+{"level":"info","message":"GET en /test"}
+{"level":"http","message":"http"}
+{"level":"info","message":"info"}
+{"level":"warn","message":"warn"}
+{"level":"error","message":"error"}
+{"level":"info","message":"GET en /test"}
+{"level":"http","message":"http"}
+{"level":"info","message":"info"}
+{"level":"warn","message":"warn"}
+{"level":"error","message":"error"}
+{"level":"info","message":"GET en /test"}
+{"level":"http","message":"http"}
+{"level":"info","message":"info"}
+{"level":"warn","message":"warn"}
+{"level":"error","message":"error"}
+{"level":"info","message":"GET en /test"}
+{"level":"http","message":"http"}
+{"level":"info","message":"info"}
+{"level":"warn","message":"warn"}
+{"level":"error","message":"error"}
+{"level":"info","message":"GET en /test"}
+{"level":"http","message":"http"}
+{"level":"info","message":"info"}
+{"level":"warn","message":"warn"}
+{"level":"error","message":"error"}
+{"level":"info","message":"GET en /test"}
+{"level":"http","message":"http"}
+{"level":"info","message":"info"}
+{"level":"warn","message":"warn"}
+{"level":"error","message":"error"}
+{"level":"info","message":"GET en /login"}
+{"level":"info","message":"GET en /login"}
