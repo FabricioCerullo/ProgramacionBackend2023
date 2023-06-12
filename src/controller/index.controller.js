@@ -10,6 +10,7 @@ import { transporter } from "../config/gmail.js";
 import { faker } from '@faker-js/faker';
 import { CustomError } from "../repository/index.service_repository.js";
 import { Eerror } from "../enums/Eerror.js";
+import { prodLogger,logger } from "../utils/logger.js";
 
                     //PRODUCTOS
 
@@ -43,19 +44,19 @@ export const getProductIDController = async (req, res) => {
  
  }
 
- export const addProductController = async(req, res) => {
+ export const addProductController = (req, res) => {
 
         const {title, description, price, thumbail, code, stock} = req.body;
         if (!title || !description || !price || !code || !stock) {
-        CustomError.createError({
-            name:"Invalid field",
-            cause:generateProdrInfoError(req.body),
-            message:"El campo rellenado es invalido",
-            errorCode:Eerror.INVALID_FIELD_ERROR
-        })
+            CustomError.createError({
+                name:"Invalid field",
+                cause:generateProdrInfoError(req.body),
+                message:"El campo rellenado es invalido",
+                errorCode:Eerror.INVALID_FIELD_ERROR
+            })
     }
-        const newProd = await productService.addProduct({title, description,price, thumbail, code, stock});
-        res.status(201).send({status: "ok", payload: newProd});
+      productService.addProduct({title, description,price, thumbail, code, stock});
+        res.status(201).send({status: "ok",});
 }
 
 export const deleteProductController = async (req, res)=> {
@@ -93,7 +94,7 @@ export const mockingProducts = async (req, res)=>{
             
         }
     } catch (error) {
-        console.log(error);
+        logger.warning("algo salio mal")
     }
 }
 
@@ -104,11 +105,11 @@ export const prodDTO = async (req, res) => {
     try {
         const { id } = req.params;
         const prod = await productService.getProdId(id);
-        console.log(prod);
+        logger.info(prod);
         const result = new GetProductDTO(prod);
-        console.log(result);
+        logger.info(result);
     } catch (error) {
-        console.log(error);
+        logger.warning(error);
     }
 }
 
@@ -129,9 +130,9 @@ export const deleteProdInCartController =  async (req, res)=>{
 export const createCart = async (req, res)=>{
     try {
         const cartCreated = await cartService.addNewCart();
-        console.log(cartCreated);
+        logger.info("Cart created")
     } catch (error) {
-        console.log(error);
+        logger.warning("error")
     }
 }
 
@@ -256,7 +257,7 @@ export const loginRedirectController = async (req, res) => {
 }
 
 export const failedRedirectController = async (req, res) => {
-    console.log("falla!... algo salio mal");
+    logger.error("algo salio re mal")
     res.status(500).send("error");
 }
 
@@ -331,4 +332,16 @@ export const authMiddleware = async (req, res, next) => {
 }                    
 
 
-                        //nodemailer
+export const Plogger = async (req, res) => {
+        req.logger.silly("silly");
+        req.logger.verbose("verbose");
+        req.logger.debug("debug");
+        req.logger.http("http");
+        req.logger.info("info");
+        req.logger.warn("warn");
+        req.logger.error("error");
+        //res.send({message:"prueba de logger"});
+
+}                        
+
+                   
