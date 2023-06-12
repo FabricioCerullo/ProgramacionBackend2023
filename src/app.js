@@ -16,6 +16,8 @@ import { options } from "./config/options.js";
 import cookieParser from "cookie-Parser";
 import { connectDB } from "./config/db_Connetions.js";
 import { errorIndex } from "./middlewares/error/index.error.js";
+import { addLogger , logger} from "./utils/logger.js";
+import { Plogger } from "./controller/index.controller.js";
 
 const app = express();
 
@@ -47,14 +49,24 @@ connectDB();
 //path
 app.use(express.static(__dirname + "/../public"));
 
+//loggers
+//app.use(addLogger);
+
+
 //routes
 app.use("/api/products", productRouter);
 app.use("/api/cart", cartRouter);
 app.use("/", viewsRouter);
 app.use("/api/sessions", AutenRouter);
 
+
+//logger
+
+app.get("/test",Plogger)
+
 //errores
 app.use(errorIndex);
+
 
 //handlebars
 app.engine('handlebars', engine());
