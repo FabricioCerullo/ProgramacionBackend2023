@@ -22,5 +22,4 @@ productRouter.post("/",addProductController)
 productRouter.delete("/:pid",checkRole(["admin"]),deleteProductController)
 
 
-
 export default productRouter;
