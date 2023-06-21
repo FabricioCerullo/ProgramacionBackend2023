@@ -18,12 +18,14 @@ import { connectDB } from "./config/db_Connetions.js";
 import { errorIndex } from "./middlewares/error/index.error.js";
 import { addLogger , logger} from "./utils/logger.js";
 import { Plogger } from "./controller/index.controller.js";
+import userRouter from "./routes/users.routes.js";
 
 const app = express();
 
 const httpServer = app.listen(8080, ()=>{
     console.log("Server listening on port 8080");
 });
+
 
 //middlewares
 app.use(express.json());
@@ -58,7 +60,7 @@ app.use("/api/products", productRouter);
 app.use("/api/cart", cartRouter);
 app.use("/", viewsRouter);
 app.use("/api/sessions", AutenRouter);
-
+app.use("/api/users", userRouter)
 
 //logger
 
