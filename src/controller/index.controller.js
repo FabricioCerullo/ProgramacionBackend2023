@@ -11,6 +11,10 @@ import { faker } from '@faker-js/faker';
 import { CustomError } from "../repository/index.service_repository.js";
 import { Eerror } from "../enums/Eerror.js";
 import { prodLogger,logger } from "../utils/logger.js";
+import jwt from "jsonwebtoken";
+import { recoveryPassword } from "../config/gmail.js";
+import { generateEmailToken } from "../utils.js";
+
 
                     //PRODUCTOS
 
@@ -45,9 +49,10 @@ export const getProductIDController = async (req, res) => {
  }
 
  export const addProductController = (req, res) => {
-
-        const {title, description, price, thumbail, code, stock} = req.body;
-        if (!title || !description || !price || !code || !stock) {
+        const product = req.body;
+        product.owner = req.user._id;
+        console.log(product);
+        if (!product) {
             CustomError.createError({
                 name:"Invalid field",
                 cause:generateProdrInfoError(req.body),
@@ -55,17 +60,31 @@ export const getProductIDController = async (req, res) => {
                 errorCode:Eerror.INVALID_FIELD_ERROR
             })
     }
-      productService.addProduct({title, description,price, thumbail, code, stock});
+      productService.addProduct(product);
         res.status(201).send({status: "ok",});
 }
 
 export const deleteProductController = async (req, res)=> {
     try {
-        const {pid} = req.params
-        const id = parseInt(pid)
-        await productService.deleteProduct(id);
-        res.send({status: "succes", payload: "Su Producto ha sido elimando exitosamente!"})
+        const {pid} = req.params;
+        //onst id = parseInt(pid)
+        const product = await prodModel.findById(pid);
+        if (product) {
+            console.log(product);
+            const prodOwner=JSON.parse(JSON.stringify(product.owner));
+            const userId=JSON.parse(JSON.stringify(req.user._id));
+
+            if (req.user.role==="premium"&&prodOwner==userId||req.user.role==="admin"){
+                await productService.deleteProduct(pid);
+                res.send({status: "succes", payload: "Su Producto ha sido elimando exitosamente!"})
+            }else{
+                res.status(404).send({status: "error", error: "no puedes eliminar este producto"});
+            }
+        }else{
+            res.status(404).send({status: "error", error: "el producto no existe"});
+        }
     } catch (error) {
+        console.log(error);
         res.status(404).send({status: "error", error: "Ha ocurrido un error!"});
     }
 }
@@ -113,6 +132,7 @@ export const prodDTO = async (req, res) => {
     }
 }
 
+
                         //CARTS
 
 export const getCartController = async (req, res)=>{
@@ -147,14 +167,6 @@ export const addProdInCartController = async (req, res)=>{
     }
 
 }
-/*
-        Funcion innecesaria
-export const updateCartController =  async (req, res)=>{
-    const {cid,pid} = req.params;
-    const result = await cartService.updateCart(cid,pid);
-    res.send({status:"success", payload: result});
-}
-*/
 
 export const deleteCartController = async (req, res) => {
     const {cid} = req.params;
@@ -246,6 +258,10 @@ export const forgotController = (req, res) => {
     res.render("forgot");
 }
 
+export const forgotPasswordController = (req, res) => {
+    res.render("resetPassword");
+}
+  
                 //REDIRECCIONES DE USUARIOS
 
 export const registroRedirectController =  async (req, res) => {
@@ -345,3 +361,40 @@ export const Plogger = async (req, res) => {
 }                        
 
                    
+//recuperacion de contraseña
+export const forgotPassword = async (req, res) => {
+    try {
+        const {email} = req.body
+        const userExist = await userModel.findOne({email:email});
+        if (!userExist) {
+            return res.send(`<div>Error al ingresar, por favor intenta de nuevo! <a href="/resetPassword"> Intente Nuevamente</a></div>`);
+        }
+        const token = generateEmailToken(email,3*60);
+         recoveryPassword(email,token);
+        res.send(`envio existoso del correo de recuperacion. Regresar al login <a href="/login">LOGIN</a>`);
+    } catch (error) {
+        logger.error;
+    }
+}
+
+
+//USERS
+
+export const changeRoleUser = async (req, res) => {
+    try {
+        const userId = req.params.uid;
+        const user = await userModel.findById(userId);
+        const userRole = user.role;
+        if (userRole==="user") {
+            user.role="premium";
+        }else if (userRole==="premium"){
+            user.role="user"
+        }else{
+            return res.send("no es posible cambiar el rol del usuario")
+        }
+        await userModel.updateOne({_id:user._id}, user);
+        res.send({status:"sucess", message:"rol modificado"})
+    } catch (error) {
+        console.log(error);
+    }
+}
