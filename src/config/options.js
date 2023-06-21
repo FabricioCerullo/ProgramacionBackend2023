@@ -15,7 +15,7 @@ const PERSISNTECE = process.env.PERSISNTECE;
 const ADMINEMAIL = process.env.ADMINEMAIL;
 const ADMINPASSWORD = process.env.ADMINPASSWORD;
 const NODE_ENV = process.env.NODE_ENV;
-
+const SECRET_TOKEN_EMAIL = process.env.SECRET_TOKEN_EMAIL;
 
 export const options = {
     mongoDB:{
@@ -35,7 +35,8 @@ export const options = {
     persistence:PERSISNTECE,
     gmail:{
         adminEmail:ADMINEMAIL,
-        adminPassword:ADMINPASSWORD
+        adminPassword:ADMINPASSWORD,
+        tokenSecretEmail:SECRET_TOKEN_EMAIL
     },
     entorno:{
         modo:NODE_ENV
