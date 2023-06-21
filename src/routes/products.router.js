@@ -13,13 +13,13 @@ productRouter.get('/',getProductsController)
 //ruta de mocking, genera 100 products
 productRouter.get("/mockingproducts’", mockingProducts)
 //devuelve el prod. con la id indicada
-//productRouter.get("/:id",getProductIDController)
+//productRouter.get("/:id",getProductIDController)--INHABILITADO
 //devuelve el DTO de prod. se inhabilito mientras tanto la anterior
-productRouter.get("/:id",checkRole(["admin"]), prodDTO)
+productRouter.get("/:id", prodDTO)
 //se agrega un nuevo prod. 
 productRouter.post("/",addProductController)
 //se elimina el prod. especificado con la id.
-productRouter.delete("/:pid",checkRole(["admin"]),deleteProductController)
+productRouter.delete("/:pid",deleteProductController)
 
 
 export default productRouter;
