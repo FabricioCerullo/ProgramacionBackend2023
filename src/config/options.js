@@ -1,4 +1,14 @@
 import dotenv from "dotenv";
+import swaggerJSDoc from "swagger-jsdoc";
+
+import path from "path";
+import { sync } from "glob";
+
+const currentDir = path.dirname(new URL(import.meta.url).pathname);
+const docsPath = path.join(currentDir, "../docs");
+const yamlFiles = sync(path.join(docsPath, "**/*.yaml"));
+
+
 dotenv.config();
 
 const PORT= process.env.PORT;
@@ -16,6 +26,7 @@ const ADMINEMAIL = process.env.ADMINEMAIL;
 const ADMINPASSWORD = process.env.ADMINPASSWORD;
 const NODE_ENV = process.env.NODE_ENV;
 const SECRET_TOKEN_EMAIL = process.env.SECRET_TOKEN_EMAIL;
+
 
 export const options = {
     mongoDB:{
@@ -42,3 +53,18 @@ export const options = {
         modo:NODE_ENV
     }
 }
+
+const swaggerOptions ={
+    definition: {
+        openapi: "3.0.1",
+        info:{
+            title:"documentacion de pagina de productos",
+            description:"api rest para gestionar productos",
+            version:"1.0.0"
+        },
+        servers:[{url:`http://localhost:8080`}]
+    },
+    apis:["../docs/products/products.yaml"]
+};
+console.log(yamlFiles)
+export const swaggerSpecs = swaggerJSDoc(swaggerOptions);
