@@ -62,9 +62,10 @@ const swaggerOptions ={
             description:"api rest para gestionar productos",
             version:"1.0.0"
         },
-        servers:[{url:`http://localhost:8080`}]
+       // servers:[{url:`http://localhost:8080`}]
     },
     apis:["../docs/products/products.yaml"]
 };
-console.log(yamlFiles)
+console.log(swaggerOptions.apis)
 export const swaggerSpecs = swaggerJSDoc(swaggerOptions);
+
