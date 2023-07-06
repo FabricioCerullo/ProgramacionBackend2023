@@ -21,6 +21,7 @@ export const transporter = nodemailer.createTransport({
 })
 
 //recuperacion de password
+
 export const recoveryPassword=async(email,token) => {
     const link=`http://localhost:8080/forgot?token=${token}`;
     await transporter.sendMail({
