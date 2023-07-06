@@ -1,13 +1,12 @@
 import dotenv from "dotenv";
 import swaggerJSDoc from "swagger-jsdoc";
+import path, { dirname } from "path";
+import { fileURLToPath } from "url";
 
-import path from "path";
-import { sync } from "glob";
 
-const currentDir = path.dirname(new URL(import.meta.url).pathname);
-const docsPath = path.join(currentDir, "../docs");
-const yamlFiles = sync(path.join(docsPath, "**/*.yaml"));
-
+const _filename = fileURLToPath(import.meta.url);
+const __filename = _filename.slice(0,-15);
+const __dirname = dirname(__filename); 
 
 dotenv.config();
 
@@ -60,11 +59,10 @@ const swaggerOptions ={
         info:{
             title:"documentacion de pagina de productos",
             description:"api rest para gestionar productos",
-            version:"1.0.0"
         },
-        servers:[{url:`http://localhost:8080`}]
+        servers:[{url:'http://localhost:8080'}]
     },
-    apis:yamlFiles
+    apis: [`${__dirname}/../docs/**/*.yaml`]
 };
 console.log(swaggerOptions.apis)
 export const swaggerSpecs = swaggerJSDoc(swaggerOptions);
