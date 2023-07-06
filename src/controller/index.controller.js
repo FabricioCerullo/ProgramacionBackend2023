@@ -50,7 +50,7 @@ export const getProductIDController = async (req, res) => {
 
  export const addProductController = (req, res) => {
         const product = req.body;
-        product.owner = req.user._id;
+        //product.owner = req.user._id;
         console.log(product);
         if (!product) {
             CustomError.createError({
@@ -63,6 +63,8 @@ export const getProductIDController = async (req, res) => {
       productService.addProduct(product);
         res.status(201).send({status: "ok",});
 }
+
+
 
 export const deleteProductController = async (req, res)=> {
     try {
