@@ -1,4 +1,3 @@
-import path from "path";
 import { fileURLToPath } from "url";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
@@ -19,8 +18,7 @@ export const generateEmailToken = (email, expirteTime)=>{
     return token;
 }
 
-
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 
-export default __dirname
+export default __dirname;
