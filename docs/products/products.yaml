@@ -1,0 +1,166 @@
+paths:
+  /api/products/:
+    get:
+      summary: Obtener todos los productos
+      tags:
+        - Productos
+      responses: 
+        "200":
+          description: Todos los productos fueron obtenidos correctamente
+          content: 
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#components/schemas/Product'
+        "401":
+          description: Error por falta de permisos
+        "500":
+          description: Error interno del servidor
+    post:
+      summary: Se agrega un producto nuevo
+      tags:
+        - Producto Agregado
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#components/requestBodies/'
+      responses:   
+        "200":
+          description: el producto fue creado correctamente
+          content: 
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#components/schemas/Product'
+        "401":
+          description: Error por falta de permisos
+        "500":
+          description: Error interno del servidor            
+
+
+  /api/products/{:id}:
+    get:
+      summary: Obtener un producto por su ID
+      tags: 
+        - Producto
+      parameters: 
+        - name: id 
+          in: path
+          required: true
+          description: el id es el identificador del producto del que se obtiene  
+          schema: 
+            $type: ObjectId
+      responses:
+        "200":
+          description: Todos los productos fueron obtenidos correctamente
+          content: 
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#components/schemas/Product'
+        "401":
+          description: Error por falta de permisos
+        "500":
+          description: Error interno del servidor
+    delete:
+      summary: se borra el prod. por su id
+      tags:
+       - Producto eliminado
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: el id es el identificador del prod. que quiere eliminar
+          schema:
+            $type: ObjectId
+      responses:
+        "200":
+          description: Todos los productos fueron obtenidos correctamente
+          content: 
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#components/schemas/Product'
+        "401":
+          description: Error por falta de permisos
+        "500":
+          description: Error interno del servidor                  
+
+
+components: 
+  schemas: 
+    Product:
+      type: object
+      properties: 
+        _id:
+          type: ObjectId
+          description: id del productos autogenerado por la base de datos
+        title:
+          type: string
+          description: nombre del producto
+        description:
+          type: string
+          description: descripcion del producto
+        price:
+          type: number
+          description: precio del producto
+        thumbnail:
+          type: array
+          description: imagen del producto
+        code:
+          type: number
+          description: codigo del producto
+        stock:
+          type: number
+          description: stock del producto
+        owner:  
+          type: ObjectId
+          description: id del usuario que creo el producto
+      example:
+        _id: ObjectId(`212s1d2sd66545454`)
+        title: Vauquita Alfajor Dulce de Leche x 75 gr.
+        description: Golosina
+        price: 250
+        thumbnail: []
+        code: 7798138290167
+        stock: 2 
+        owner: 54545s4d5sdsd54$5s4d 
+  requestBodies:
+    addProduct:
+      type: object
+      properties:
+        title:
+          type: string
+          description: nombre del producto
+        description:
+          type: string
+          description: descripcion del producto
+        price:
+          type: number
+          description: precio del producto
+        thumbnail:
+          type: array
+          description: imagen del producto
+        code:
+          type: number
+          description: codigo del producto
+        stock:
+          type: number
+          description: stock del producto
+        owner:  
+          type: ObjectId
+          description: id del usuario que creo el producto
+      example:
+        title: Vauquita Alfajor Dulce de Leche x 75 gr.
+        description: Golosina
+        price: 250
+        thumbnail: []
+        code: 7798138290167
+        stock: 2 
+        owner: 54545s4d5sdsd54$5s4d 
