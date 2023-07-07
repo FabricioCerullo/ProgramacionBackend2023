@@ -93,3 +93,4 @@ app.use((req,res,next)=>{
 })
 
 
+export {app};
