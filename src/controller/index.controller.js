@@ -152,9 +152,9 @@ export const deleteProdInCartController =  async (req, res)=>{
 export const createCart = async (req, res)=>{
     try {
         const cartCreated = await cartService.addNewCart();
-        logger.info("Cart created")
+        res.send({status:"success", message: "cart creada"});
     } catch (error) {
-        logger.warning("error")
+        res.send({status:"error", message:error});
     }
 }
 
