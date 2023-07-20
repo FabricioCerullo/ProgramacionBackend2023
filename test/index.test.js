@@ -78,14 +78,15 @@ describe('Testing de app de Productos',()=>{
             const userMock = {
                 first_name: "fabricio",
                 last_name: "cerullo",
-                email: "elmascapo123555@gmail.com",
+                email: "elmascapo1dd235ghgh55@gmail.com",
                 age:22,
                 password: "123",
             }
             const response = await requester.post('/api/sessions/registro').send(userMock);
             const {statusCode,_body} = response;
-            console.log(response);
-            expect(Array.isArray(response));
+            console.log("registro",response);
+            expect(response.rawHeaders.includes('Location')).to.be.true;
+            expect(response.rawHeaders.includes('/login')).to.be.true;
            //ESTA BIEN, DA ERROR 302, PERO LA REDIRECCION ESTA BIEN FALTA MODIFICAR CODIGO PARA LEER LA RUTA DIRECCIONADA
         });
 
@@ -96,7 +97,7 @@ describe('Testing de app de Productos',()=>{
             }
             const response = await requester.post('/api/sessions/login').send(loginMock);
             const {statusCode,_body} = response;
-            console.log(response);
+            console.log("login",response);
             expect(Array.isArray(response))
          //ESTA BIEN, DA ERROR 302, PERO LA REDIRECCION ESTA BIEN FALTA MODIFICAR CODIGO PARA LEER LA RUTA DIRECCIONADA
         })
