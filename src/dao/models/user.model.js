@@ -35,7 +35,27 @@ const userSchema = new mongoose.Schema({
     nombreCompleto:{
         type:String,
         default:""
-    }
+    },
+    document:{
+        type:[
+            {
+                name:{type: String, required:true},
+                reference:{type: String, required:true}
+            }
+        ],
+        default:[]
+    },
+    last_connections:{
+        type:Date,
+        default:null
+    },
+    status:{
+        type:String,
+        required:true,
+        enums:["comnpleto", "incompleto", "pendiente"],
+        default:"pendiente"
+    },
+    avatar:{type: String, default:""}
 })
 
 export const userModel = mongoose.model(userCollection, userSchema);
