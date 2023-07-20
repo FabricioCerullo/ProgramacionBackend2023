@@ -71,7 +71,7 @@ app.use("/api/docs", swaggerUI.serve,swaggerUI.setup(swaggerSpecs));
 app.get("/test",Plogger)
 
 //errores
-app.use(errorIndex);
+//app.use(errorIndex);
 
 
 //handlebars
