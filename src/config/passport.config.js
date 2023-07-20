@@ -11,6 +11,7 @@ import { generateUserInfoError } from "../repository/index.service_repository.js
 import { Eerror } from "../enums/Eerror.js";
 import { CustomError } from "../repository/index.service_repository.js";
 
+
 const localStrategy = local.Strategy;
 
 const initializePassport = () => {
@@ -21,7 +22,8 @@ const initializePassport = () => {
             passReqToCallback: true
         },
         async (req, username, password, done) => {
-            const {first_name, last_name, age, role, cart} = req.body;
+            console.log(req.file);
+            const {first_name, last_name, age, role, cart,avatar} = req.body;
 
             try {     
                     const user = await userModel.findOne({email:username});
@@ -36,7 +38,8 @@ const initializePassport = () => {
                         email:username, 
                         age,
                         password:createHash(password),
-                        role
+                        role,
+                        avatar:req.file.path
                     }
                     if (newUser.email.endsWith("@admin.com")) {
                         newUser.role = "admin";
@@ -82,8 +85,10 @@ const initializePassport = () => {
                     console.log(`usuario con el correo ${username} no existe`);
                     return done(null, false);
                 }
-                if (!isValidPassword(user, password)) return done(null, false);     
-                return done(null, user);
+                if (!isValidPassword(user, password)) return done(null, false);
+                user.last_connections  = new Date();
+                const userUpdate = await userModel.findByIdAndUpdate(user._id,user)   
+                return done(null, userUpdate);
             } catch (error) {
                 return done (error)
             }
