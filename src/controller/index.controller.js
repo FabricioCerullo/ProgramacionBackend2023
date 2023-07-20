@@ -323,11 +323,14 @@ export const forgotRedirectController =  async(req, res) => {
 
 }
 
-export const logoutRedirectController = (req, res) => {
-    req.session.destroy((err) => {
+export const logoutRedirectController = async (req, res) => {
+    const user = {...req.user};
+    user.last_connections  = new Date();
+    req.session.destroy(async(err) => {
         if (err) {
             return res.status(500).send("Internal server error");
           }
+          const userUpdate = await userModel.findByIdAndUpdate(user._id,user)  
           res.redirect("/login");
     })
 }
@@ -387,15 +390,79 @@ export const changeRoleUser = async (req, res) => {
         const userId = req.params.uid;
         const user = await userModel.findById(userId);
         const userRole = user.role;
-        if (userRole==="user") {
-            user.role="premium";
-        }else if (userRole==="premium"){
-            user.role="user"
+
+        if (user.document.length<3&& user.status != "completo") {
+            res.send({status:"error", message:"el usuario no completo los documentos"})
         }else{
-            return res.send("no es posible cambiar el rol del usuario")
+            if (userRole==="user") {
+                user.role="premium";
+            }else if (userRole==="premium"){
+                user.role="user"
+            }else{
+                return res.send("no es posible cambiar el rol del usuario");
+            }
+            await userModel.updateOne({_id:user._id}, user);
+            res.send({status:"sucess", message:"rol modificado"})
         }
-        await userModel.updateOne({_id:user._id}, user);
-        res.send({status:"sucess", message:"rol modificado"})
+    } catch (error) {
+        console.log(error);
+    }
+}
+
+export const userDocuments = async (req, res) => {
+    try {
+        const userId = req.params.uid;
+        const user = await userModel.findById(userId);
+        if (user) {
+            const docs = req.files.map(file =>({name:file.originalname, reference:file.filename}));
+            user.document = docs;
+            const userUpdated = await userModel.findByIdAndUpdate(user._id,user);
+            console.log(docs);
+            res.send({status:"sucess", message:"correcto"})
+        }else{
+            res.send({status:"error", message:"faltan documentos"})
+        }
+    } catch (error) {
+        console.log(error);
+    }
+}
+
+export const userChangeWDocument = async (req, res) => {
+    try {
+        const userId = req.params.uid;
+        const user = await userModel.findById(userId);
+        if (user) {
+            const identificacion = req.files[`identificacion`]?.[0] || null;
+            const domicilio = req.files[`identificacion`]?.[0] || null;
+            const estadoDeCuenta = req.files[`identificacion`]?.[0] || null;
+            const docs = [];
+            
+            if (identificacion) {
+                docs.push({name:"identificacion",reference:identificacion.filename});
+            }
+            if (domicilio) {
+                docs.push({name:"domicilio",reference:domicilio.filename});
+            }
+            if (estadoDeCuenta) {
+                docs.push({name:"estadoDeCuenta",reference:estadoDeCuenta.filename});
+            }
+
+
+            if (docs.length === 3) {
+                user.status = "completo";
+            }else{
+                user.status = "incompleto";
+            }
+
+            user.document = docs;
+            const userUpdated = await userModel.findByIdAndUpdate(user._id,user);
+
+            res.send({status:"sucess", message:"correcto"})
+
+        }else{
+            res.send({status:"error", message:"faltan documentos"})
+        }
+
     } catch (error) {
         console.log(error);
     }
