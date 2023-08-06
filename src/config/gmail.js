@@ -39,3 +39,39 @@ export const recoveryPassword=async(email,token) => {
         `
     })
 }
+
+export const enviarCorreoEliminado = async (email) => {
+    try {
+        await transporter.sendMail({
+            from:options.gmail.adminEmail,
+            to:email,
+            subject:"se elimino tu cuenta debido a la inactividad",
+            html:
+            `<div>
+            <h1>Cuenta Eliminada</h1>
+            <p>Se ha eliminado su cuenta de la base de datos debido a su inactividad</p>
+            </div>
+            `
+        })
+    } catch (error) {
+        console.log(error);
+    }
+}
+
+export const enviarCorreoProductoEliminado = async (email) => {
+    try {
+        await transporter.sendMail({
+            from:options.gmail.adminEmail,
+            to:email,
+            subject:"se elimino un producto que usted creó",
+            html:
+            `<div>
+            <h1>Producto Eliminada</h1>
+            <p>Se ha eliminado un producto que usted creo</p>
+            </div>
+            `
+        })
+    } catch (error) {
+        console.log(error);
+    }
+}
