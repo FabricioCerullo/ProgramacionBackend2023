@@ -1,10 +1,9 @@
 import { json, Router } from "express";
 
-import {forgotPasswordController,homeRenderProductsController,realTimeProductsRenderController,productIDRenderController,loginController,perfilController,registroController,forgotController} from "../controller/index.controller.js";
+import {checkRole,authMiddleware,viewCart,viewAdministrador,forgotPasswordController,homeRenderProductsController,realTimeProductsRenderController,productIDRenderController,loginController,perfilController,registroController,forgotController} from "../controller/index.controller.js";
 
 
 const viewsRouter = Router();
-//const manager = new ProductManager();
 viewsRouter.use(json());
 
                 //VISTA DE LOS PRODUCTOS
@@ -23,6 +22,8 @@ viewsRouter.get('/perfil', perfilController)
 viewsRouter.get('/registro',registroController)
 viewsRouter.get('/forgot',forgotController )
 viewsRouter.get('/resetPassword',forgotPasswordController)
+viewsRouter.get("/admin",authMiddleware,checkRole(['admin']),viewAdministrador)
+viewsRouter.get("/cart/:cartId",viewCart)
 
 
 export default viewsRouter;
