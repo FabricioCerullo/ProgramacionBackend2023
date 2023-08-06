@@ -1,35 +1,42 @@
 <script  src="/socket.io/socket.io.js"></script>
 <script  src="/js/index.js"></script>
-
+<script>
+    const deleteCookie = (name) => {
+    document.cookie = `${name} = expires=;Thu, 01 Jan 1970 00:00:00 UTC; path=/;`;};
+</script>
+<script>
+        deleteCookie("cookie-delete");
+</script>
 <head>
     <div>
         <h1>Lista de Productos:</h1>
     </div>
 </head>
-
 <body>
     <div id="containerProd">
     <div class="productos">
         <ul>
             {{#each prod}}
-            <br>
-                <li>
-                    Producto:  <b>{{title}}</b> ,
-                    <br>
-                    Codigo: {{code}},
-                    <br>
-                    Precio: {{price}},
-                    <br>
-                    Stock: {{stock}},
-                    <br>
-                    Categoria: {{description}}
-                </li>
-            <br>
+            <div class="product">
+                <br>
+                    <li>
+                        Producto:  <b>{{title}}</b> 
+                        <br>
+                        Codigo: {{code}}
+                        <br>
+                        Precio: {{price}}
+                        <br>
+                        Stock: {{stock}}
+                        <br>
+                        Categoria: {{description}}
+                        <br>
+                        ID: {{_id}}
+                        </li>
+               <br>
+            </div>
             {{/each}}
         </ul>
     </div>
-
-
         <div class="paginate">
 
             <div class="page-prev">
@@ -45,21 +52,11 @@
             </div>
 
         </div>
-
-        <div id="viewUser">
-            <p>Correo: </p>
-        </div>
-
-        <div class="cierreSesion">
+        <div class="button-access" >
             <button type="button"><a href="/api/sessions/logout">Cerrar Sesion</a></button>
-        </div>
-    
-        <div class="viweUserSession">
             <button type="sumbit"><a href="/api/sessions/current">Mirar Usuario</a></button>
-        </div>
-            
-        <div class="cartTicket">
-            <button type="sumbit"><a href="/api/cart/">Generar Ticket</a></button>
+            <button type="sumbit"><a href="/admin">ADMIN</a></button>
+            <button type="sumbit"><a href="/api/cart/initial-purchase">Generar Compra</a></button>
         </div>
         
     </div>
