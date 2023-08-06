@@ -1,0 +1,48 @@
+<script  src="/socket.io/socket.io.js"></script>
+<script  src="/js/index.js"></script>
+
+<h1>PAGINA GENERAL DE ADMIN</h1>
+<body>
+    <div id="container">
+        <div id="containerUsers">
+            <ul>
+                {{#each users}}
+                    <br>
+                        <li>
+                            NOMBRE:<b>{{this.first_name}}</b> ,
+                            <br>
+                            APELLIDO:{{last_name}},
+                            <br>
+                            EMAIL:{{email}},
+                            <br>
+                            ROLE:{{role}}
+                        </li>
+                    <br>
+                {{/each}}
+            </ul>
+        </div>
+
+        <div>
+            <h2>Modificar Usuario</h2>
+                <form id="changeRoleForm" action="/api/users/premium" method="POST">
+                    <label for="userId">ID del Usuario a Cambiar de ROL:</label>
+                    <input type="text" id="userIdRole" name="userIdRole" required>
+                    <button type="submit">Modificar</button>
+                </form>
+                <p id="messageRole"></p>
+                
+            <script  src="/js/index.js"></script>
+        </div>
+        <div>
+            <h2>Eliminar Usuario</h2>
+                <form id="deleteForm" action="/api/users/delete" method="POST">
+                    <label for="userId">ID del Usuario a Eliminar:</label>
+                    <input type="text" id="userId" name="userId" required>
+                    <button type="submit">Eliminar</button>
+                </form>
+                <p id="message"></p>
+                
+            <script  src="/js/index.js"></script>
+        </div>
+</div>
+</body>
