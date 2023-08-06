@@ -39,7 +39,7 @@ export const options = {
     },
     gitHub:{
         clientID:CLIENTIDGITHUB,
-        clientSecret:CLIENTIDGITHUB,
+        clientSecret:CLIENTSECRETGITHUB,
         callbackURL:CALLBACKURLGITHUB
     },
     persistence:PERSISNTECE,
