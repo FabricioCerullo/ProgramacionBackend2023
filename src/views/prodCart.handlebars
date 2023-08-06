@@ -1,0 +1,81 @@
+<script  src="/socket.io/socket.io.js"></script>
+<script  src="/js/index.js"></script>
+<script>
+            const setCookie = (name, value, days) => {
+            const date = new Date();
+            date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
+            const expires = "expires=" + date.toUTCString();
+            document.cookie = name + "=" + value + ";" + expires + ";path=/";
+        };
+        const cidId = window.location.pathname.split("/")[2];
+        setCookie("cidId", cidId, 365);
+</script>
+
+<script>
+            const getCookie = (name) => {
+            const cookies = document.cookie.split("; ");
+            for (const cookie of cookies) {
+                const [cookieName, cookieValue] = cookie.split("=");
+                if (cookieName === name) {
+                    return cookieValue;
+                }
+            }
+            return null;
+        };
+</script>
+
+<script>
+    const deleteCookie = (name) => {
+    document.cookie = `${name} = expires=;Thu, 01 Jan 1970 00:00:00 UTC; path=/;`;};
+</script>
+
+<head>
+    <div>
+        <h1>Lista de Productos:</h1>
+    </div>
+</head>
+
+<body>
+    <div class="productos">
+            {{#each prod}}
+            <div class="product">
+                <br>
+                    <li>
+                        Producto:  <b>{{title}}</b> 
+                        <br>
+                        Codigo: {{code}}
+                        <br>
+                        Precio: {{price}}
+                        <br>
+                        Stock: {{stock}}
+                        <br>
+                        Categoria: {{description}}
+                        <br>
+                        ID: {{_id}}
+
+                        <div class="pid" data-id="{{_id}}"></div> 
+
+                        <form class="addToCartForm" method="POST">
+                            <input type="hidden" name="quantity" value="1">
+                            <button type="submit">Agregar al Carrito</button>
+                        </form>
+                        <form class="removeFromCartForm" method="POST">
+                            <input type="hidden" name="pid" value="{{_id}}">
+                            <button type="submit">Eliminar del Carrito</button>
+                        </form>
+
+                    </li>
+            </div>
+            {{/each}}
+    </div>
+    <br>
+    <div class="purchase">
+        <form id="purchaseForm" method="POST">
+            <button type="submit">Terminar Compra</button>
+            <br>
+            <button type="button" id="homeButton">Volver al Home</button>
+        </form>      
+    </div>
+    <script  src="/js/cart.js"></script>
+    <script  src="/js/purchase.js"></script>
+</body>
