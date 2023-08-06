@@ -1,7 +1,7 @@
 import {options} from "../config/options.js"
 const persistence = options.persistence;
 
-let ManagerDAO, CartsDAO;
+let ManagerDAO, CartsDAO,UserDao;
 
 switch (persistence) {
     case "mongo":
@@ -9,8 +9,10 @@ switch (persistence) {
         connectDB();
         const {ProductManager} = await import("../dao/managers/db_managers/desafioJsBackend.js");
         const {CartManager} = await import("../dao/managers/db_managers/cart.js")
+        const {UserManager} = await import("../dao/managers/db_managers/user.manager.js")
         ManagerDAO = new ProductManager();
         CartsDAO = new CartManager();
+        UserDao = new UserManager();
 
         break;
 
@@ -23,4 +25,4 @@ switch (persistence) {
     
 }
 
-export {ManagerDAO, CartsDAO}
+export {ManagerDAO, CartsDAO,UserDao}
