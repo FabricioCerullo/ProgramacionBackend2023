@@ -5,7 +5,6 @@ import prodModel from "../dao/models/prod.model.js";
 import {checkRole, getProductsController, mockingProducts,addProductController, deleteProductController, prodDTO} from "../controller/index.controller.js";
 const productRouter = Router();
 
-//const manager = new ProductManager();
 productRouter.use(json());
 
 //devuelve todos los productos
