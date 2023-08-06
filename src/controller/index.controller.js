@@ -2,8 +2,8 @@
 import { userModel } from "../dao/models/user.model.js";
 import prodModel from "../dao/models/prod.model.js";
 import { createHash, isValidPassword } from "../utils.js";
-import { GetProductDTO , GetUserDTO} from "../dao/dto/index.dto.js";
-import {productService, cartService, generateProdrInfoError} from "../repository/index.service_repository.js"
+import { GetProductDTO , GetUserDTO,} from "../dao/dto/index.dto.js";
+import {productService, cartService, generateProdrInfoError,userService} from "../repository/index.service_repository.js"
 import { v4 as uuidv4 } from 'uuid';
 import { ticketModel } from "../dao/models/ticket.model.js";
 import { transporter } from "../config/gmail.js";
@@ -12,9 +12,15 @@ import { CustomError } from "../repository/index.service_repository.js";
 import { Eerror } from "../enums/Eerror.js";
 import { prodLogger,logger } from "../utils/logger.js";
 import jwt from "jsonwebtoken";
-import { recoveryPassword } from "../config/gmail.js";
+import { recoveryPassword,enviarCorreoEliminado,enviarCorreoProductoEliminado } from "../config/gmail.js";
 import { generateEmailToken } from "../utils.js";
+import handlebars from 'handlebars';
+import { allowInsecurePrototypeAccess } from '@handlebars/allow-prototype-access';
 
+
+
+const handlebarsInstance = handlebars.create();
+handlebarsInstance.escapeExpression = allowInsecurePrototypeAccess;
 
                     //PRODUCTOS
 
@@ -78,6 +84,8 @@ export const deleteProductController = async (req, res)=> {
 
             if (req.user.role==="premium"&&prodOwner==userId||req.user.role==="admin"){
                 await productService.deleteProduct(pid);
+                const correoUser = req.user.email;
+                enviarCorreoProductoEliminado(correoUser)
                 res.send({status: "succes", payload: "Su Producto ha sido elimando exitosamente!"})
             }else{
                 res.status(404).send({status: "error", error: "no puedes eliminar este producto"});
@@ -160,27 +168,29 @@ export const createCart = async (req, res)=>{
 
 export const addProdInCartController = async (req, res)=>{
     try {
-        const {cid, pid} = req.params;
+        const {cid,pid} = req.params;
+        console.log(cid,"cod. carro");
+        console.log(pid, "cod. producto");
         const {quantity} = req.body;
-        const result = await cartService.addProdInCart(cid, pid, quantity);
-        res.send({status:"success", payload: result});
+        const resultCart = await cartService.addProdInCart(cid,pid,quantity)
+       // const result = await cartService.addProdInCart(cid, pid, quantity);
+        res.send({status:"success", payload: resultCart});
     } catch (error) {
         console.log(error);
     }
-
 }
-
+ 
 export const deleteCartController = async (req, res) => {
     const {cid} = req.params;
     const result = await cartService.deleteCart(cid);
     res.send({status:"success", payload: result});
 }
-
 //para ruta purchase
 export const purchaseCart = async (req, res) => {
     try {
-        const cartId = req.params.cid;
-        const cart = await cartService.getCartId(cartId);
+        const {cid} = req.params;
+        console.log(cid,"hola");
+        const cart = await cartService.getCartId(cid);
         const ticketProductsAvailable = [];
         const  ticketProductsNotAvailable = [];
 
@@ -198,6 +208,7 @@ export const purchaseCart = async (req, res) => {
                     ticketProductsNotAvailable.push(cartProduct);
                 }
             }
+
             console.log("ticketProductsAvailable",ticketProductsAvailable);
             console.log("ticketProductsNotAvailable",ticketProductsNotAvailable);
 
@@ -206,15 +217,16 @@ export const purchaseCart = async (req, res) => {
                 return acc+prodAmount;
             },0);
 
+        
             const newTicket = {
                 code:uuidv4(),
                 purchase_datetime:new Date().toLocaleString(),
                 amount: Totalamonunt,
-                purchaser:req.user
+                purchaser:req.user.email
             }
             console.log(req.user);
-            //const ticketCreated = await ticketModel.create(newTicket);
-            //res.send(ticketCreated);
+            const ticketCreated = await ticketModel.create(newTicket);
+            res.send(ticketCreated);
         }else{
             console.log("el carro no existe!");
         }
@@ -233,7 +245,7 @@ export const homeRenderProductsController = async (req,res)=>{
 
 export const realTimeProductsRenderController = async (req,res)=>{
     const prod = await productService.getProduct();
-    res.render("real-time-products", {prod})             
+    res.render("real-time-products", {prod} )             
 }
 
 export const productIDRenderController = async (req,res)=>{
@@ -263,7 +275,18 @@ export const forgotController = (req, res) => {
 export const forgotPasswordController = (req, res) => {
     res.render("resetPassword");
 }
-  
+
+export const viewAdministrador = async (req, res) => {
+    const users = await userService.getUser();
+    console.log(users);
+    res.render("viewsAdmin",{users});
+}
+
+export const viewCart = async (req, res) => {
+    const prod = await productService.getProduct();
+    res.render("prodCart", {prod})
+}
+
                 //REDIRECCIONES DE USUARIOS
 
 export const registroRedirectController =  async (req, res) => {
@@ -295,10 +318,10 @@ export const checkRole = (role) => {
     return (req, res, next) => {
         if (!req.user) {
             console.log(req.user);
-            return res.json({ status: "error", message:"necesitas estar autenticado"});
+            res.send(`Necesitas estar Autenticado!. Vuelve al login para hacerlo<a href="/login">LOGIN</a>`);
         }
-        if (!role.include(req.user.role)) {
-            return res.json({ status: "error", message:"no estas autorizado"});
+        if (!role.includes(req.user.role)) {
+            res.send(`Por el momento no estas Autorizado!. Vuelve al login<a href="/login">LOGIN</a>`);
         }
         next();
     }
@@ -341,14 +364,15 @@ export const authMiddleware = async (req, res, next) => {
     try {
         if (req.isAuthenticated()) {
             const userId = req.session.passport.user;
-            const user =await userModel.findById(userId)
-              if (!user) return res.status(401).json({ error: 'No se ha iniciado sesión.' });
+            const user =await userModel.findById(userId);
               req.user = user;
               next();
+    } else{
+        res.send(`NO HAS INICIADO SESION!. Vuelve al login para hacerlo<a href="/login">LOGIN</a>`);
     }
     } catch (error) {
         console.log(error);
-        res.status(500).json({ error: 'Error en el middleware de autenticación.' });
+        res.send(`Parece que hay un problema con la autenticacion! Intentalo de nuevo.<a href="/login">LOGIN</a>`);
     }
 }                    
 
@@ -387,7 +411,8 @@ export const forgotPassword = async (req, res) => {
 
 export const changeRoleUser = async (req, res) => {
     try {
-        const userId = req.params.uid;
+        const userId = req.body.userIdRole;
+        console.log(userId);
         const user = await userModel.findById(userId);
         const userRole = user.role;
 
@@ -466,4 +491,61 @@ export const userChangeWDocument = async (req, res) => {
     } catch (error) {
         console.log(error);
     }
+}
+
+//devuelve los users
+export const userAllDB = async (req, res) => {
+    try {
+        const userAll = await userService.getUser();
+        //console.log(userAll);
+        res.send({status:"ok", payload: userAll});
+        res.send(200).json({ user: new GetUserDTO(userAll) });
+    
+    } catch (error) {
+        console.log(error);
+    }
+}
+
+export const deleteUser = async (req, res) => {
+    try {
+        const uid = req.body.userId;
+        const user = await userModel.findById(uid);
+        if (user.role==="user") {
+            await userModel.findByIdAndDelete(uid);
+            res.send({status:"OK", meesage: `Usuario con el id ${uid} ha sido eliminado`});
+        }else if(user.role==="admin"){
+            res.send({status:"OK", payload: "No puede eliminar un usuario admin"});
+        }
+    } catch (error) {
+        console.log(error);
+    }
+}
+
+//elimina los users con cierto tiempo de inactivididad
+export const deleteUserTime = async (req,res) => {
+    try {
+        const tiempoInactividad = 5*60*1000;//5min
+        const fechaLimite = new Date(Date.now() - tiempoInactividad);
+        const userInactivos = await userModel.find({last_connections:{$lt: fechaLimite}})
+        const deleteUser = await userModel.deleteMany({last_connections:{$lt: fechaLimite}});
+        userInactivos.forEach(user=>{
+            enviarCorreoEliminado(user.email);
+        })
+        res.send({ status:"sucess", meesage:`Se eliminaron ${deleteUser.deletedCount} usuarios inactivos` });
+    } catch (error) {
+        console.log(error);
+    }
+}
+
+export const initiatePurchase = async (req,res) => {
+    try {
+        
+        const cartCreated = await cartService.addNewCart();
+        const cartId = cartCreated._id;
+
+        res.redirect(`/cart/${cartId}`);
+    } catch (error) {
+        console.error(error);
+        res.status(500).send("Error interno del servidor");
+}
 }
