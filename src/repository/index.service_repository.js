@@ -1,4 +1,4 @@
-import { ManagerDAO, CartsDAO } from "../dao/factory.js"
+import { ManagerDAO, CartsDAO, UserDao } from "../dao/factory.js"
 
 export class RepositoryManager{
     constructor(dao){
@@ -64,11 +64,22 @@ export class RepositoryManager{
         const cartId = await CartsDAO.getCartId(cid);
         return cartId;
     }
-
     async addNewCart(){
         const newCart = await CartsDAO.addNewCart();
         return newCart;
-    }      
+    }    
+    
+    
+    //USERS
+
+    async getUser(){
+        const users = UserDao.getUsers();
+        return users;
+    }
+    async deleteUsers(id){
+        const userDelete = UserDao.deleteUsers(id);
+        return userDelete;
+    }
  
 }
 
@@ -106,6 +117,6 @@ export const generateProdrInfoError = (prod) =>{
 
 
 
-
 export const productService = new RepositoryManager (ManagerDAO);
 export const cartService = new RepositoryManager (CartsDAO);
+export const userService = new RepositoryManager (UserDao);
