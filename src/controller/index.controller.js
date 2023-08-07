@@ -220,7 +220,7 @@ export const purchaseCart = async (req, res) => {
         
             const newTicket = {
                 code:uuidv4(),
-                purchase_datetime:new Date().toLocaleString(),
+                purchase_datetime:new Date().toISOString(),
                 amount: Totalamonunt,
                 purchaser:req.user.email
             }
