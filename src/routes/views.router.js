@@ -23,7 +23,7 @@ viewsRouter.get('/registro',registroController)
 viewsRouter.get('/forgot',forgotController )
 viewsRouter.get('/resetPassword',forgotPasswordController)
 viewsRouter.get("/admin",authMiddleware,checkRole(['admin']),viewAdministrador)
-viewsRouter.get("/cart/:cartId",viewCart)
+viewsRouter.get("/cart/:cartId",authMiddleware,viewCart)
 
 
 export default viewsRouter;
